@@ -1,0 +1,39 @@
+{
+  "name": "wanderleaf",
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node  server.js",
+    "char-atlas": "node utils/character-atlas-gen.js",
+    "tile-atlas": "node utils/tileset-atlas-gen.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "standard"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pixi.js": "^8.9.1",
+    "simplex-noise": "^4.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "standard": "^17.1.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "standard"
+    ],
+    "env": {
+      "browser": true
+    }
+  },
+  "standard": {
+    "globals": [
+      "requestAnimationFrame"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+    "standard.enableGlobally": true,
+    "standard.enable": true,
+    "eslint.validate": ["javascript"],
+    "eslint.alwaysShowStatus": true,
+    "eslint.lintTask.enable": true,
+    "eslint.run": "onSave",
+
+}
