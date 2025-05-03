@@ -1,20 +1,19 @@
-import { TilingSprite, Container, ColorMatrixFilter, Graphics } from 'pixi.js'
+import { TilingSprite, ColorMatrixFilter, Graphics } from 'pixi.js'
 import { Controllable } from './controls/Controllable.js'
 
 export class GameMap extends Controllable {
-  constructor (app, mapTexture) {
+  constructor (container, mapTexture, width, height) {
     super()
-    this.app = app
-    this.container = new Container()
+    this.container = container
 
     this.background = new Graphics()
-      .rect(0, 0, app.screen.width, app.screen.height)
+      .rect(0, 0, width, height)
       .fill('0x172038')
 
     this.tilingSprite = new TilingSprite({
       texture: mapTexture,
-      width: app.screen.width,
-      height: app.screen.height
+      width,
+      height
 
     })
 
@@ -22,7 +21,6 @@ export class GameMap extends Controllable {
 
     this.container.addChild(this.background)
     this.container.addChild(this.tilingSprite)
-    app.stage.addChild(this.container)
 
     // a simple color filter
 
