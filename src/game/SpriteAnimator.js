@@ -11,7 +11,7 @@ export class SpriteAnimator {
     for (const dir of Object.values(Direction)) {
       const anim = new AnimatedSprite(animations[dir])
       anim.animationSpeed = 0.1666
-      anim.visible = dir === defaultDirection
+      anim.visible = false
       anim.scale = 0.5
       this.sprites[dir] = anim
       this.container.addChild(anim)
