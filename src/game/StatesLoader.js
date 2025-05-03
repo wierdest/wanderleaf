@@ -6,16 +6,15 @@ import { SpriteLoader } from './SpriteLoader.js'
  */
 
 export class StatesLoader {
-  constructor (app, entityStateMapArray) {
-    this.app = app
-    this.entitityStateMap = entityStateMapArray
+  constructor (entityStateMapArray) {
+    this.entityStateMap = entityStateMapArray
   }
 
   async loadAllStatesForEntities () {
     const allStatesForEntities = []
-    const results = await Promise.all(this.entitityStateMap.map(async (item) => {
+    const results = await Promise.all(this.entityStateMap.map(async (item) => {
       const animators = await this._loadStates(item)
-      return { entity: item.entity, animators }
+      return { entity: item.entity.name, animators }
     }))
 
     allStatesForEntities.push(...results)
@@ -26,8 +25,8 @@ export class StatesLoader {
   async _loadStates (entityStateMapItem) {
     const animators = []
     for (const state of entityStateMapItem.states) {
-      const animations = await SpriteLoader.loadAnimationAtlasesForEntityState(entityStateMapItem.entity, state.name)
-      animators.push(new SpriteAnimator(this.app, animations, state.name, state.defaultDirection))
+      const animations = await SpriteLoader.loadAnimationAtlasesForEntityState(entityStateMapItem.entity.name, state.name)
+      animators.push(new SpriteAnimator(entityStateMapItem.entity.container, animations, state.name, state.defaultDirection))
     }
     return animators
   }
