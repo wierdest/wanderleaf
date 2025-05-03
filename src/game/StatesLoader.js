@@ -6,8 +6,7 @@ import { SpriteLoader } from './SpriteLoader.js'
  */
 
 export class StatesLoader {
-  constructor (app, entityStateMapArray) {
-    this.app = app
+  constructor (entityStateMapArray) {
     this.entitityStateMap = entityStateMapArray
   }
 

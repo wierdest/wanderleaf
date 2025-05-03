@@ -35,7 +35,6 @@ async function setup () {
   app.stage.addChild(playerContainer)
   app.stage.addChild(uiContainer)
 
-
   // Loads a very basic map:
 
   const mapSpritesheet = await SpriteLoader.loadAtlasTexturesForEntity('map')
@@ -91,7 +90,10 @@ async function setup () {
   // Loads a  character with only 2 states
   const entities = [
     {
-      entity: 'character',
+      entity: {
+        name: 'character',
+        container: playerContainer
+      },
       states: [
         { name: State.IDLE, defaultDirection: Direction.DOWN },
         { name: State.WALK, defaultDirection: Direction.DOWN }
