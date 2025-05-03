@@ -1,4 +1,4 @@
-import { Application, Text, TextStyle, Assets } from 'pixi.js'
+import { Application, Text, TextStyle, Assets, Container } from 'pixi.js'
 import { GameMap } from './game/GameMap.js'
 import { ArrowControls } from './game/ArrowControls.js'
 import { Direction } from './game/enums/Direction.js'
@@ -25,6 +25,16 @@ async function setup () {
 
 (async () => {
   await setup()
+
+  // Decoupling rendering from game objects
+  const playerContainer = new Container()
+  const mapContainer = new Container()
+  const uiContainer = new Container()
+
+  app.stage.addChild(mapContainer)
+  app.stage.addChild(playerContainer)
+  app.stage.addChild(uiContainer)
+
 
   // Loads a very basic map:
 
@@ -70,7 +80,7 @@ async function setup () {
 
   const mapRenderTexture = isometricMapTextureCreator.create()
 
-  const map = new GameMap(app, mapRenderTexture)
+  const map = new GameMap(mapContainer, mapRenderTexture, app.screen.width, app.screen.height)
 
   // Map controls for scroll
 
