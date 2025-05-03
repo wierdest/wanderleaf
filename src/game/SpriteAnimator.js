@@ -40,7 +40,7 @@ export class SpriteAnimator {
   play () {
     this.anim.visible = true
     this.anim.play()
-    this.container.addChild(this.anim )
+    this.container.addChild(this.anim)
   }
 
   stop () {

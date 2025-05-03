@@ -125,7 +125,6 @@ async function setup () {
 
   map.setPlayer(player)
 
-  // TODO decouple rendering and staging for the game objects (player & map)
   // TODO create a Game class or a SceneManager
   // TODO design start / loading screen
 
@@ -179,9 +178,9 @@ async function setup () {
   textZ.x = barX - textZ.width / 4
   textZ.y = 0
 
-  app.stage.addChild(textA)
-  app.stage.addChild(textB)
-  app.stage.addChild(textZ)
+  uiContainer.addChild(textA)
+  uiContainer.addChild(textB)
+  uiContainer.addChild(textZ)
 
   let progress = 0
   let completedCycles = 0
