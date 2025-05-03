@@ -3,7 +3,7 @@ import { Controllable } from './controls/Controllable.js'
 import { State } from './enums/State.js'
 
 export class Player extends Controllable {
-  constructor (character, animators) {
+  constructor (character, animators, initialPosition, bounds) {
     super()
     this.character = character
     // this code is going to be moved to the FSM!!!...
@@ -11,13 +11,13 @@ export class Player extends Controllable {
     this.state = State.IDLE
     this.animator = this.animators.get(this.state)
     this.body = new Body(() => this.animator.anim)
-    this.body.setPosition(this.animator.app.screen.width / 2, this.animator.app.screen.height / 2)
+    this.body.setPosition(initialPosition.x, initialPosition.y)
     this.animator.play()
 
-    this.screenWidthMargin = this.animator.app.screen.width / 5
-    this.screenWidthLimit = this.animator.app.screen.width - this.animator.app.screen.width / 8
-    this.screenHeightMargin = this.animator.app.screen.height / 5
-    this.screenHeightLimit = this.animator.app.screen.height - this.animator.app.screen.height / 8
+    this.screenWidthMargin = bounds.getMinX()
+    this.screenWidthLimit = bounds.getMaxX()
+    this.screenHeightMargin = bounds.getMinY()
+    this.screenHeightLimit = bounds.getMaxY()
   }
 
   changeState (newState) {
