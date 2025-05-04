@@ -9,11 +9,9 @@ export class IsometricMapTextureCreator {
   constructor (renderer, spritesheet, isoWidth, isoHeight, widthInTiles, heightInTiles, biomeEvaluators) {
     this.renderer = renderer
     this.spritesheet = spritesheet
-
-    // TODO move building code (_createTiles and dependencies) to a Builder
-    // TODO this shall be IsometricMapTextureRenderer have the Director injected ?
-
     this.container = new Container()
+    // TODO move building code (_createTiles and dependencies) to a Builder
+    // TODO this should be injected in the builder as something like renderer
 
     this.isoWidth = isoWidth
     this.isoHeight = isoHeight
