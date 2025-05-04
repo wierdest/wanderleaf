@@ -6,16 +6,11 @@ import { Player } from './game/Player.js'
 import { Character } from './game/Character.js'
 import { StatesLoader } from './game/StatesLoader.js'
 import { State } from './game/enums/State.js'
-import { SpriteLoader } from './game/SpriteLoader.js'
-import { IsometricMapTextureCreator } from './game/IsometricMapTextureCreator.js'
-import { TILESIZE } from './game/constants/dimension.js'
 import { Vector2 } from './game/math/Vector2.js'
 import { Bounds } from './game/math/Bounds.js'
-import { BiomeContext } from './game/mapbuilding/BiomeContext.js'
-import { LakeEvaluator } from './game/mapbuilding/LakeEvaluator.js'
-import { OceanEvaluator } from './game/mapbuilding/OceanEvaluator.js'
 import { LoadingBar } from './game/LoadingBar.js'
 import { StageManager } from './game/StageManager.js'
+import { MapLoader } from './game/MapLoader.js'
 
 const app = new Application()
 
@@ -33,54 +28,15 @@ async function setup () {
   const playerContainer = stageManager.addNewContainer('player')
   const uiContainer = stageManager.addNewContainer('ui')
 
-  // Loads a very basic map:
+  const basicMapLoader = new MapLoader(app.renderer, new Vector2(app.screen.width, app.screen.height))
 
-  const mapSpritesheet = await SpriteLoader.loadAtlasTexturesForEntity('map')
-
-  const isoWidth = TILESIZE * Math.sqrt(3) / 2
-  const isoHeight = TILESIZE
-
-  const widthInTiles = Math.ceil(app.screen.width * 1.5 / isoWidth) + 4
-  const heightInTiles = (Math.ceil(app.screen.height * 1.5 / isoHeight) + 4)
-
-  const xBounds = new Vector2(-widthInTiles, widthInTiles)
-  const yBounds = new Vector2(-heightInTiles * 2, heightInTiles * 2)
-
-  const biomeEvaluators = []
-
-  const oceanBounds = new Bounds(xBounds, yBounds)
-
-  const oceanContext = new BiomeContext(oceanBounds, ['tile101', ...Array.from({ length: 3 }, (_, i) => `tile${82 + i}`)])
-
-  const oceanEvaluator = new OceanEvaluator(oceanContext)
-
-  biomeEvaluators.push(oceanEvaluator)
-
-  const lakeBounds = new Bounds(new Vector2(-18, -14))
-
-  const lakeContext = new BiomeContext(lakeBounds, ['tile104'], 18, 1)
-
-  const lakeEvaluator = new LakeEvaluator(lakeContext)
-
-  biomeEvaluators.push(lakeEvaluator)
-
-  const isometricMapTextureCreator =
-    new IsometricMapTextureCreator(
-      app,
-      mapSpritesheet,
-      isoWidth,
-      isoHeight,
-      widthInTiles,
-      heightInTiles * 2,
-      biomeEvaluators
-    )
-
-  const mapRenderTexture = isometricMapTextureCreator.create()
+  // TODO Replace progressCallbacks with ui
+  const mapLoaderProgressCallback = (progress) => console.log(`Progress for MapLoader is: ${100 * progress}%`)
+  const mapRenderTexture = await basicMapLoader.load(mapLoaderProgressCallback)
 
   const map = new GameMap(mapContainer, mapRenderTexture, app.screen.width, app.screen.height)
 
   // Map controls for scroll
-
   const mapArrowControls = new ArrowControls(map)
 
   mapArrowControls.attach()

@@ -1,5 +1,5 @@
 import { TILESIZE } from './constants/dimension.js'
-import { IsometricMapTextureCreator } from './IsometricMapTextureCreator'
+import { IsometricMapTextureCreator } from './IsometricMapTextureCreator.js'
 import { BaseLoader } from './loaders/BaseLoader.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
 import { LakeEvaluator } from './mapbuilding/LakeEvaluator.js'
