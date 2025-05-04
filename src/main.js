@@ -9,12 +9,13 @@ import { State } from './game/enums/State.js'
 import { SpriteLoader } from './game/SpriteLoader.js'
 import { IsometricMapTextureCreator } from './game/IsometricMapTextureCreator.js'
 import { TILESIZE } from './game/constants/dimension.js'
-import { Vector2 } from './game/mapbuilding/core/Vector2.js'
-import { Bounds } from './game/mapbuilding/core/Bounds.js'
+import { Vector2 } from './game/math/Vector2.js'
+import { Bounds } from './game/math/Bounds.js'
 import { BiomeContext } from './game/mapbuilding/BiomeContext.js'
 import { LakeEvaluator } from './game/mapbuilding/LakeEvaluator.js'
 import { OceanEvaluator } from './game/mapbuilding/OceanEvaluator.js'
 import { LoadingBar } from './game/LoadingBar.js'
+import { StageManager } from './game/StageManager.js'
 
 const app = new Application()
 
@@ -25,6 +26,12 @@ async function setup () {
 
 (async () => {
   await setup()
+
+  // StageManager
+  const stageManager = new StageManager(app.stage)
+  const playerContainer = stageManager.addNewContainer('player')
+  const mapContainer = stageManager.addNewContainer('map')
+  const uiContainer = stageManager.addNewContainer('ui')
 
   // Loads a very basic map:
 
@@ -70,7 +77,7 @@ async function setup () {
 
   const mapRenderTexture = isometricMapTextureCreator.create()
 
-  const map = new GameMap(app, mapRenderTexture)
+  const map = new GameMap(mapContainer, mapRenderTexture, app.screen.width, app.screen.height)
 
   // Map controls for scroll
 
@@ -81,7 +88,10 @@ async function setup () {
   // Loads a  character with only 2 states
   const entities = [
     {
-      entity: 'character',
+      entity: {
+        name: 'character',
+        container: playerContainer
+      },
       states: [
         { name: State.IDLE, defaultDirection: Direction.DOWN },
         { name: State.WALK, defaultDirection: Direction.DOWN }
@@ -89,13 +99,19 @@ async function setup () {
     }
   ]
 
-  const stateLoader = new StatesLoader(app, entities)
+  const stateLoader = new StatesLoader(entities)
 
   const loadedStatesPerEntity = await stateLoader.loadAllStatesForEntities()
 
   const playerAnimators = loadedStatesPerEntity.find(i => i.entity === 'character').animators
 
-  const player = new Player(new Character(), playerAnimators)
+  const playerInitialPosition = new Vector2(app.screen.width / 2, app.screen.height / 2)
+
+  const playerXBounds = new Vector2(app.screen.width / 5, app.screen.width - app.screen.width / 8)
+  const playerYBounds = new Vector2(app.screen.height / 5, app.screen.height - app.screen.height / 8)
+  const playerBounds = new Bounds(playerXBounds, playerYBounds)
+
+  const player = new Player(new Character(), playerAnimators, playerInitialPosition, playerBounds)
 
   // Player controls
 
@@ -107,7 +123,6 @@ async function setup () {
 
   map.setPlayer(player)
 
-  // TODO decouple rendering and staging for the game objects (player & map)
   // TODO create a Game class or a SceneManager
   // TODO design start / loading screen
 
@@ -161,9 +176,9 @@ async function setup () {
   textZ.x = barX - textZ.width / 4
   textZ.y = 0
 
-  app.stage.addChild(textA)
-  app.stage.addChild(textB)
-  app.stage.addChild(textZ)
+  uiContainer.addChild(textA)
+  uiContainer.addChild(textB)
+  uiContainer.addChild(textZ)
 
   let progress = 0
   let completedCycles = 0

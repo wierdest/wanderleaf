@@ -8,7 +8,8 @@
     "char-atlas": "node utils/character-atlas-gen.js",
     "tile-atlas": "node utils/tileset-atlas-gen.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "standard"
+    "lint": "standard",
+    "lint-fix": "standard --fix"
   },
   "keywords": [],
   "author": "",
