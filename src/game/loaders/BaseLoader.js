@@ -1,7 +1,10 @@
-import { NOT_IMPLEMENTED } from '../constants/error.js'
+import { IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/error.js'
 
 export class BaseLoader {
   constructor () {
+    if (new.target === BaseLoader) {
+      throw new Error(IS_ABSTRACT(this.constructor.name))
+    }
     this.progress = 0
   }
 
