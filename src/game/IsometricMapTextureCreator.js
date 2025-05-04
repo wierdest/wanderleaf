@@ -6,9 +6,12 @@ import { DEFAULT_LAND_TILE_TEXTURE } from './constants/assets.js'
  */
 
 export class IsometricMapTextureCreator {
-  constructor (app, spritesheet, isoWidth, isoHeight, widthInTiles, heightInTiles, biomeEvaluators) {
-    this.app = app
+  constructor (renderer, spritesheet, isoWidth, isoHeight, widthInTiles, heightInTiles, biomeEvaluators) {
+    this.renderer = renderer
     this.spritesheet = spritesheet
+
+    // TODO move building code (_createTiles and dependencies) to a Builder
+    // TODO this shall be IsometricMapTextureRenderer have the Director injected ?
 
     this.container = new Container()
 
@@ -34,7 +37,7 @@ export class IsometricMapTextureCreator {
       height: bounds.height
     })
 
-    this.app.renderer.render({ container: this.container, target: renderTexture })
+    this.renderer.render({ container: this.container, target: renderTexture })
 
     return renderTexture
   }
