@@ -1,6 +1,12 @@
-import { NOT_IMPLEMENTED } from '../constants/error.js'
+import { IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/error.js'
 
 export class Controllable {
+  constructor () {
+    if (new.target === Controllable) {
+      throw new Error(IS_ABSTRACT(this.constructor.name))
+    }
+  }
+
   onControlInput (dx, dy, pressDuration, direction) {
     throw new Error(NOT_IMPLEMENTED(this.contructor.name, 'onControlInput'))
   }

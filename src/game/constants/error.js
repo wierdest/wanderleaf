@@ -6,3 +6,4 @@ export const CONTAINER_DOES_NOT_EXIST = (containerName) => `Container ${containe
 
 export const NOT_INITIALIZED = (className) => `${className} not initialized yet`
 export const IS_SINGLETON = (className) => `${className} is a singleton. Use ${className}.getInstance`
+export const IS_ABSTRACT = (className) => `${className} is abstract and cannot be instantiated directly`
