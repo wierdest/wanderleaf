@@ -70,38 +70,21 @@ Implementamos também o **BiomeEvaluator**, que avalia se um determinado tile pe
 
 Por cima disso, adicionamos um `PIXI.ColorMatrixFilter` para simular de modo rudimentar a passagem de tempo.
 
-## 🛣️ Em andamento...
+## 🛣️ Próximos passos...
 
 A próxima história [em desenvolvimento] é relacionada a refinamento da textura do mapa, a partir do carregamento em etapas, e a construção de uma tela inicial do protótipo.
 
 Para dar início a isso, foi necessário verificar algumas ferramentas que `PIXI.js` oferece, nomeadamente `PIXI.Text` (incluindo o carregamento de uma fonte) e `PIXI.Graphics`
 
-Criamos um **StageManager** para gerenciar o staging dos containers de renderização.
+O próximo passo é desacoplar os containers dos objetos de jogo, para que possamos gerenciar a ordem de renderização.
 
-Iniciamos a implementação do **BaseLoader** e intencionamos:
-    - criar algo como **MapLoader**
-    - refatorar o **SpriteLoader** e "**StatesLoader**"
-    - criar **EntityLoader**
+Isso fará com que sejamos capazes de renderizar elementos de UI e HUD e elementos de jogo separadamente.
 
-A partir daí teremos uma estrutura propícia ao encapsulamento da lógica inicial do jogo, tendo duas opções de caminhos:
+Provavelmente implementaremos algo como GameManager ou Game, para organizar as cenas e sua renderização.
 
-    - Criaremos o protótipo da tela inicial.
-    - Refinaremos o carregamento do mapa e da nossa única entidade (o jogador)
+Criaremos o protótipo da tela inicial.
 
-As ramificações desses caminhos:
+Utilizaremos a presença dessa tela inicial como ponto de partida para refinar o carregamento do mapa (trazendo o fator de intencionalidade que o tileset precisa) e adicionar o resto dos estados do jogador.
 
-    - A criação da tela inicial leva a...
-        - criação do conceito de Scene (elementos de jogo + ui)
-        - criação de um SceneManager para administrar as diferentes cenas (cenas de loading, cena principal, cena de settings)
-        - expandir interação, incluindo taps, clicks e movimento do mouse.
-        - possibilidade de iniciar a conexão com IA, já que poderemos adicionar mais facilmente um outlet de interação
-    
-    - O refinamento do carregamento de elementos de jogo possibilita...
-        - implementar os outros seis estados do jogador
-        - refatorar o **Player** para utilizar a FSM
-        - utilizar o tileset em sua totalidade
-        - iniciar a estratégia de organização por zIndex, na relação entities x mapa
-        - iniciar a estratégia de detecção de colisão
-        - iniciar o HUD
-        - implementar npcs
+Aproveitaremos a oportunidade para expandir os controles, incluindo taps, clicks e movimento do mouse.
 
