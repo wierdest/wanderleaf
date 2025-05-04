@@ -29,8 +29,8 @@ async function setup () {
 
   // StageManager
   const stageManager = new StageManager(app.stage)
-  const mapContainer = stageManager.addNewContainer('map')
   const playerContainer = stageManager.addNewContainer('player')
+  const mapContainer = stageManager.addNewContainer('map')
   const uiContainer = stageManager.addNewContainer('ui')
 
   // Loads a very basic map:
