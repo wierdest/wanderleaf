@@ -1,4 +1,4 @@
-import { Application, Text, TextStyle, Assets, Container } from 'pixi.js'
+import { Application, Text, TextStyle, Assets } from 'pixi.js'
 import { GameMap } from './game/GameMap.js'
 import { ArrowControls } from './game/ArrowControls.js'
 import { Direction } from './game/enums/Direction.js'
@@ -15,6 +15,7 @@ import { BiomeContext } from './game/mapbuilding/BiomeContext.js'
 import { LakeEvaluator } from './game/mapbuilding/LakeEvaluator.js'
 import { OceanEvaluator } from './game/mapbuilding/OceanEvaluator.js'
 import { LoadingBar } from './game/LoadingBar.js'
+import { StageManager } from './game/StageManager.js'
 
 const app = new Application()
 
@@ -26,14 +27,11 @@ async function setup () {
 (async () => {
   await setup()
 
-  // Decoupling rendering from game objects
-  const playerContainer = new Container()
-  const mapContainer = new Container()
-  const uiContainer = new Container()
-
-  app.stage.addChild(mapContainer)
-  app.stage.addChild(playerContainer)
-  app.stage.addChild(uiContainer)
+  // StageManager
+  const stageManager = new StageManager(app.stage)
+  const playerContainer = stageManager.addNewContainer('player')
+  const mapContainer = stageManager.addNewContainer('map')
+  const uiContainer = stageManager.addNewContainer('ui')
 
   // Loads a very basic map:
 
