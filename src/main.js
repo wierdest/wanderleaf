@@ -32,13 +32,13 @@ async function setup () {
 
   // TODO Replace progressCallbacks with ui
   const mapLoaderProgressCallback = (progress) => console.log(`Progress for MapLoader is: ${100 * progress}%`)
+
   const mapRenderTexture = await basicMapLoader.load(mapLoaderProgressCallback)
 
   const map = new GameMap(mapContainer, mapRenderTexture, app.screen.width, app.screen.height)
 
   // Map controls for scroll
   const mapArrowControls = new ArrowControls(map)
-
   mapArrowControls.attach()
 
   // Loads a  character with only 2 states

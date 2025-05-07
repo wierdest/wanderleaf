@@ -20,6 +20,6 @@ export class BaseLoader {
   }
 
   async _work (progressCallback) {
-    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'work'))
+    throw new Error(NOT_IMPLEMENTED(this.constructor.name, '_work'))
   }
 }
