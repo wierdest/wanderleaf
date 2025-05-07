@@ -4,7 +4,7 @@ import { Controllable } from './Controllable.js'
 export class BaseControls {
   constructor (target) {
     if (!(target instanceof Controllable)) {
-      throw new Error(INVALID_ARGUMENT(this.constructor.name, `controllable: ${typeof context}`))
+      throw new Error(INVALID_ARGUMENT(this.constructor.name, `controllable: ${target.constructor.name}`))
     }
     if (new.target === BaseControls) {
       throw new Error(IS_ABSTRACT(this.constructor.name))

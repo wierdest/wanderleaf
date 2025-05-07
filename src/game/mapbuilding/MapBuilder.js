@@ -5,7 +5,7 @@ import { Vector2 } from '../math/Vector2.js'
 export class MapBuilder {
   constructor (size) {
     if (!(size instanceof Vector2)) {
-      throw new Error(INVALID_ARGUMENT(this.constructor.name, `renderer: ${typeof size}`))
+      throw new Error(INVALID_ARGUMENT(this.constructor.name, `size: ${size.constructor.name}`))
     }
     if (new.target === MapBuilder) {
       throw new Error(IS_ABSTRACT(this.constructor.name))
