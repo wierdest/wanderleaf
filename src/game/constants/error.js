@@ -3,6 +3,7 @@ export const NOT_IMPLEMENTED = (className, methodName) => `${className} must imp
 export const INVALID_ARGUMENT = (className, argumentName) => `${className}: Invalid or missing argument '${argumentName}'`
 export const CONTAINER_ALREADY_EXISTS = (containerName) => `Container ${containerName} already exists`
 export const CONTAINER_DOES_NOT_EXIST = (containerName) => `Container ${containerName} does not exist`
-
 export const NOT_INITIALIZED = (className) => `${className} not initialized yet`
 export const IS_SINGLETON = (className) => `${className} is a singleton. Use ${className}.getInstance`
+export const IS_ABSTRACT = (className) => `${className} is abstract and cannot be instantiated directly`
+export const UNDEFINED = (value, possibleReason) => `${value} is undefined! ${possibleReason}`

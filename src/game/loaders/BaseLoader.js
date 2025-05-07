@@ -1,7 +1,10 @@
-import { NOT_IMPLEMENTED } from '../constants/error.js'
+import { IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/error.js'
 
 export class BaseLoader {
   constructor () {
+    if (new.target === BaseLoader) {
+      throw new Error(IS_ABSTRACT(this.constructor.name))
+    }
     this.progress = 0
   }
 
@@ -17,6 +20,6 @@ export class BaseLoader {
   }
 
   async _work (progressCallback) {
-    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'work'))
+    throw new Error(NOT_IMPLEMENTED(this.constructor.name, '_work'))
   }
 }

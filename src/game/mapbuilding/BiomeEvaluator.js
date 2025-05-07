@@ -1,10 +1,13 @@
-import { INVALID_ARGUMENT, NOT_IMPLEMENTED } from '../constants/error.js'
+import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/error.js'
 import { BiomeContext } from './BiomeContext.js'
 
 export class BiomeEvaluator {
   constructor (context) {
     if (!(context instanceof BiomeContext)) {
       throw new Error(INVALID_ARGUMENT(this.constructor.name, `context: ${typeof context}`))
+    }
+    if (new.target === BiomeEvaluator) {
+      throw new Error(IS_ABSTRACT(this.constructor.name))
     }
   }
 
