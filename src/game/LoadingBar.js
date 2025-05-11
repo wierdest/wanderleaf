@@ -68,7 +68,7 @@ export class LoadingBar {
     this.updateTyping()
   }
 
-  setMessage(message) {
+  setMessage (message) {
     if (message !== this.currentMessage) {
       this.currentMessage = message
       this.typedCount = 0
@@ -76,7 +76,7 @@ export class LoadingBar {
     }
   }
 
-  updateTyping() {
+  updateTyping () {
     if (this.typedCount < this.currentMessage.length) {
       this.typedCount += this.typingSpeed
       const shown = this.currentMessage.slice(0, Math.floor(this.typedCount))
