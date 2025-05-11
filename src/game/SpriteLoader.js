@@ -1,12 +1,27 @@
 import { Assets, Spritesheet } from 'pixi.js'
 import { ASSETS, ATLASES } from './constants/assets.js'
 import { FAILED_TO_FETCH_MANIFEST } from './constants/error.js'
+import { BaseLoader } from './loaders/BaseLoader.js'
 /**
  * Sprite Loader = loads the sprites for each state[direction].animations
  * Notice it is not a singleton
  */
-export class SpriteLoader {
-  static async loadAtlasTexturesForEntity (entity) {
+export class SpriteLoader extends BaseLoader {
+  async _work ({ progressCallback, entity, state, filename }) {
+    if (filename && entity) {
+      return await this._loadSprite(entity, filename)
+    }
+
+    if (state && entity) {
+      return await this._loadAnimationAtlasesForEntityState(progressCallback, entity, state)
+    }
+
+    if (entity) {
+      return await this._loadAtlasTexturesForEntity(entity)
+    }
+  }
+
+  async _loadAtlasTexturesForEntity (entity) {
     const basePath = `/${ASSETS}/${entity}/${ATLASES}/`
     const manifest = await this._loadManifest(basePath)
     const file = manifest[0]
@@ -14,7 +29,7 @@ export class SpriteLoader {
     return this._loadAtlasIntoSpritesheet(atlasUrl)
   }
 
-  static async _loadAtlasIntoSpritesheet (url) {
+  async _loadAtlasIntoSpritesheet (url) {
     const atlas = await fetch(url).then(res => res.json())
     const imagePath = new URL(atlas.meta.image, window.location.origin + url).href
     const texture = await Assets.load(imagePath)
@@ -23,10 +38,18 @@ export class SpriteLoader {
     return spritesheet
   }
 
-  static async loadAnimationAtlasesForEntityState (entity, state) {
+  async _loadAnimationAtlasesForEntityState (progressCallback, entity, state) {
     const basePath = `/${ASSETS}/${entity}/${state}/${ATLASES}/`
     const manifest = await this._loadManifest(basePath)
     const animations = {}
+
+    let progress = 0.1
+    const progressString = `${entity} ${state}`
+    progressCallback(progressString, progress)
+
+    const totalFiles = manifest.length
+
+    let completedFiles = 0
     for (const file of manifest) {
       const atlasUrl = `${basePath}${file}`
       const spritesheet = await this._loadAtlasIntoSpritesheet(atlasUrl)
@@ -34,12 +57,16 @@ export class SpriteLoader {
       for (const [key, value] of Object.entries(spritesheet.animations)) {
         animations[key] = value
       }
+      completedFiles++
+      progress = Math.floor((completedFiles / totalFiles) * 10) / 10
+      progressCallback(progressString, progress)
     }
 
+    progressCallback(progressString, 1)
     return animations
   }
 
-  static async loadSprite (entity, filename) {
+  async _loadSprite (entity, filename) {
     const path = `/${ASSETS}/${entity}/${filename}`
     try {
       const texture = await Assets.load(path)
@@ -49,7 +76,7 @@ export class SpriteLoader {
     }
   }
 
-  static async _loadManifest (basePath) {
+  async _loadManifest (basePath) {
     const manifestUrl = `${basePath}manifest.json`
     try {
       return await fetch(manifestUrl).then(res => res.json())
