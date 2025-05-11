@@ -8,18 +8,23 @@ export class BaseLoader {
     this.progress = 0
   }
 
-  async load (onProgress) {
+  async load (options = {}) {
+    const { onProgress, ...otherOptions } = options
+
     this.progress = 0
-    const result = await this._work(progress => {
-      this.progress = progress
-      if (onProgress) onProgress(progress)
+
+    const result = await this._work({
+      progressCallback: progress => {
+        this.progress = progress
+        if (onProgress) onProgress(progress)
+      },
+      ...otherOptions
     })
-    this.progress = 1
-    if (onProgress) onProgress(1)
+
     return result
   }
 
-  async _work (progressCallback) {
+  async _work ({ progressCallback, ...args }) {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, '_work'))
   }
 }
