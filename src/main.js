@@ -1,5 +1,4 @@
 import { Application, Text, TextStyle, Assets } from 'pixi.js'
-import { GameMap } from './game/GameMap.js'
 import { ArrowControls } from './game/ArrowControls.js'
 import { Direction } from './game/enums/Direction.js'
 import { Player } from './game/Player.js'
@@ -10,7 +9,10 @@ import { Vector2 } from './game/math/Vector2.js'
 import { Bounds } from './game/math/Bounds.js'
 import { LoadingBar } from './game/LoadingBar.js'
 import { StageManager } from './game/StageManager.js'
-import { MapLoader } from './game/MapLoader.js'
+import { IsometricMapBuilder } from './game/IsometricMapBuilder.js'
+import { IsometricMapDirector } from './game/IsometricMapDirector.js'
+import { GameMap } from './game/GameMap.js'
+import { MapTextureLoader } from './game/MapTextureLoader.js'
 
 const app = new Application()
 
@@ -21,6 +23,7 @@ async function setup () {
 
 (async () => {
   await setup()
+  const screenSize = new Vector2(app.screen.width, app.screen.height)
 
   // StageManager
   const stageManager = new StageManager(app.stage)
@@ -28,18 +31,26 @@ async function setup () {
   const playerContainer = stageManager.addNewContainer('player')
   const uiContainer = stageManager.addNewContainer('ui')
 
-  const basicMapLoader = new MapLoader(app.renderer, new Vector2(app.screen.width, app.screen.height))
-
   // TODO Replace progressCallbacks with ui
   const mapLoaderProgressCallback = (progress) => console.log(`Progress for MapLoader is: ${100 * progress}%`)
 
-  const mapRenderTexture = await basicMapLoader.load(mapLoaderProgressCallback)
+  const mapBuilder = new IsometricMapBuilder(screenSize)
 
-  const map = new GameMap(mapContainer, mapRenderTexture, app.screen.width, app.screen.height)
+  const mapDirector = new IsometricMapDirector(mapBuilder, mapLoaderProgressCallback)
+
+  const mapBasicTextureLoader = new MapTextureLoader(app.renderer, mapDirector.construct())
+
+  const mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
+
+  const map = new GameMap(mapContainer, mapRenderTexture, screenSize)
 
   // Map controls for scroll
   const mapArrowControls = new ArrowControls(map)
   mapArrowControls.attach()
+
+  mapDirector.refine().then(() => {
+    console.log('Finished refining map!!')
+  })
 
   // Loads a  character with only 2 states
   const entities = [
