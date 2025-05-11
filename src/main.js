@@ -66,9 +66,11 @@ async function setup () {
     }
   ]
 
+  const entityLoaderProgressCallback = (progressString, progress) => console.log(`Progress for ${progressString} is: ${100 * progress}%`)
+
   const stateLoader = new StatesLoader(entities)
 
-  const loadedStatesPerEntity = await stateLoader.loadAllStatesForEntities()
+  const loadedStatesPerEntity = await stateLoader.load({ progressCallback: entityLoaderProgressCallback })
 
   const playerAnimators = loadedStatesPerEntity.find(i => i.entity === 'character').animators
 
