@@ -78,10 +78,14 @@ Para dar início a isso, foi necessário verificar algumas ferramentas que `PIXI
 
 Criamos um **StageManager** para gerenciar o staging dos containers de renderização.
 
-Iniciamos a implementação do **BaseLoader** e intencionamos:
-    - criar algo como **MapLoader**
-    - refatorar o **SpriteLoader** e "**StatesLoader**"
-    - criar **EntityLoader**
+Criamos **MapBuilder** e **MapDirector** e **MapTextureRender**, desacoplando tile-building do processo de renderização. 
+
+Substituímos o "IsometricTextureCreator", pela implementação concreta **IsometricMapTextureRenderer**.
+
+Delegamos a responsabilidade de registrar o progresso do processo a um **BaseLoader**, o **MapTextureLoader**.
+
+**StatesLoader** e **SpriteLoader** implementam **BaseLoader**.
+
 
 A partir daí teremos uma estrutura propícia ao encapsulamento da lógica inicial do jogo, tendo duas opções de caminhos:
 
