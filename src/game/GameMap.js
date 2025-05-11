@@ -2,9 +2,11 @@ import { TilingSprite, ColorMatrixFilter, Graphics } from 'pixi.js'
 import { Controllable } from './controls/Controllable.js'
 
 export class GameMap extends Controllable {
-  constructor (container, mapTexture, width, height) {
+  constructor (container, mapTexture, size) {
     super()
     this.container = container
+    const width = size.x
+    const height = size.y
 
     this.background = new Graphics()
       .rect(0, 0, width, height)
