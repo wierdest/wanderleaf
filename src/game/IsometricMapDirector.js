@@ -7,11 +7,7 @@ import { Vector2 } from './math/Vector2.js'
 
 export class IsometricMapDirector extends MapDirector {
   construct () {
-    this.updateProgress(0.2)
-
     this.builder.init()
-
-    this.updateProgress(0.3)
 
     // Build ocean
     this.builder.initBiomeEvaluator(
@@ -23,8 +19,6 @@ export class IsometricMapDirector extends MapDirector {
         )
       )
     )
-
-    this.updateProgress(0.5)
 
     // Build a lake
     this.builder.initBiomeEvaluator(
@@ -39,13 +33,9 @@ export class IsometricMapDirector extends MapDirector {
       )
     )
 
-    this.updateProgress(0.7)
-
     // Build and return tiles
     this.tiles = this.builder.buildTiles()
-
-    // At this point, tiles is a basic organization of the map, now it's time to start refining it
-    // we need to start asynchronous work on it
+    this.updateProgress(0.1)
 
     return this.tiles
   }
@@ -57,12 +47,13 @@ export class IsometricMapDirector extends MapDirector {
       this.applyVegetation.bind(this)
     ]
     for (let i = 0; i < refinementSteps.length; i++) {
-      await refinementSteps[i]()
-      const progress = 0.8 + (0.2 * (i + 1)) / refinementSteps.length
+      const progress = 0.1 + (0.2 * (i + 1)) / refinementSteps.length
       this.updateProgress(progress)
+      await refinementSteps[i]()
     }
 
     console.log('Refinement complete')
+    this.updateProgress(1)
   }
 
   // These are all stubs, we are going to implement it for real later
