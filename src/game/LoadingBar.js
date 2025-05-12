@@ -77,12 +77,22 @@ export class LoadingBar {
   }
 
   updateTyping () {
+    if (this.typingInterval) {
+      cancelAnimationFrame(this.typingInterval)
+    }
+
+    const typeStep = () => {
     if (this.typedCount < this.currentMessage.length) {
       this.typedCount += this.typingSpeed
       const shown = this.currentMessage.slice(0, Math.floor(this.typedCount))
       this.message.text = shown
       this.message.x = (this.x + this.fullWidth / 2) - this.message.width / 2
+        this.typingInterval = requestAnimationFrame(typeStep)
+      } else {
+        this.typingInterval = null
+      }
     }
+    this.typingInterval = requestAnimationFrame(typeStep)
   }
 
   destroy () {
