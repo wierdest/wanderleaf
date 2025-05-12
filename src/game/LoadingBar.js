@@ -1,7 +1,7 @@
 import { FillGradient, Graphics, Text } from 'pixi.js'
 
 export class LoadingBar {
-  constructor ({ container, pos, size, textStyle }) {
+  constructor ({ container, size, pos, textStyle }) {
     this.container = container
 
     const width = size.x
