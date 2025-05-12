@@ -37,7 +37,7 @@ export class LoadingBar {
 
     this.message = new Text({
       text: 'Carregando...',
-      textStyle
+      style: textStyle
     })
 
     this.message.x = (this.x + width / 2) - this.message.width / 2
@@ -45,7 +45,7 @@ export class LoadingBar {
 
     this.percentage = new Text({
       text: '',
-      textStyle
+      style: textStyle
     })
 
     this.percentage.x = (this.x + width / 2) - this.percentage.width / 2
