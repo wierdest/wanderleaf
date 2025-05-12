@@ -31,14 +31,42 @@ async function setup () {
   const playerContainer = stageManager.addNewContainer('player')
   const uiContainer = stageManager.addNewContainer('ui')
 
+  // UI
+  // load the font
+  await Assets.load('/assets/font/upheavtt.ttf')
+
+  const uiTextStyle = new TextStyle({
+    fontFamily: 'upheavtt',
+    fontSize: 18,
+    fontStyle: 'normal',
+    fontWeight: 'bold',
+    fill: 'white',
+    stroke: { color: 'black', width: 2 },
+    dropShadow: {
+      color: '#000000',
+      blur: 3,
+      angle: Math.PI / 3,
+      distance: 3
+    },
+    wordWrap: true,
+    wordWrapWidth: 600
+  })
+
+  const barSize = new Vector2(300, 20)
+  const barPos = new Vector2((screenSize.x - barSize.x) / 2, screenSize.y - barSize.y * 2)
+
+  const loadingBar = new LoadingBar({ container: uiContainer, size: barSize, pos: barPos, textStyle: uiTextStyle })
+
   // TODO Replace progressCallbacks with ui
-  const mapLoaderProgressCallback = (progress) => console.log(`Progress for MapLoader is: ${100 * progress}%`)
+  const mapLoaderProgressCallback = (message, progress) => loadingBar.update(message, progress)
 
   const mapBuilder = new IsometricMapBuilder(screenSize)
 
   const mapDirector = new IsometricMapDirector(mapBuilder, mapLoaderProgressCallback)
 
-  const mapBasicTextureLoader = new MapTextureLoader(app.renderer, mapDirector.construct())
+  const tiles = await mapDirector.construct()
+
+  const mapBasicTextureLoader = new MapTextureLoader(app.renderer, tiles)
 
   const mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
 
@@ -66,7 +94,9 @@ async function setup () {
     }
   ]
 
-  const entityLoaderProgressCallback = (progressString, progress) => console.log(`Progress for ${progressString} is: ${100 * progress}%`)
+  loadingBar.update('Carregando estados do jogador', 0.1)
+
+  const entityLoaderProgressCallback = (progressString, progress) => loadingBar.update(progressString, progress)
 
   const stateLoader = new StatesLoader(entities)
 
@@ -97,98 +127,18 @@ async function setup () {
 
   // LoadingBar
   const barWidth = 300
-  const barHeight = 20
   const barX = (app.screen.width - barWidth) / 2
-  const barY = (app.screen.height - barHeight * 2)
-
-  const loadingBar = new LoadingBar(app, barX, barY, barWidth, barHeight)
-
-  // Text
-  // load the fonts
-  await Assets.load('/assets/font/upheavtt.ttf')
-
-  const style = new TextStyle({
-    fontFamily: 'upheavtt',
-    fontSize: 18,
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fill: 'white',
-    stroke: { color: 'black', width: 2 },
-    dropShadow: {
-      color: '#000000',
-      blur: 3,
-      angle: Math.PI / 3,
-      distance: 3
-    },
-    wordWrap: true,
-    wordWrapWidth: 600
-  })
-
-  const textA = new Text({
-    text: '',
-    style
-  })
-  textA.x = (barX + barWidth / 2) - textA.width / 2
-  textA.y = (barY - barHeight - textA.height)
-
-  const textB = new Text({
-    text: 'outra messagem!',
-    style
-  })
-  textB.x = (barX + barWidth / 2) - textB.width / 2
-  textB.y = textA.y + textA.height / 2 + 7
 
   const textZ = new Text({
     text: 'Use as setas para mover o personagem na tela',
-    style
+    style: uiTextStyle
   })
   textZ.x = barX - textZ.width / 4
   textZ.y = 0
 
-  uiContainer.addChild(textA)
-  uiContainer.addChild(textB)
   uiContainer.addChild(textZ)
-
-  let progress = 0
-  let completedCycles = 0
-  let typed = 0
-
-  const messages = [
-    'Carregando o resto dos assets do mapa...',
-    '...Brincadeirinha! Isso é apenas uma prova de conceito!',
-    'Confira o readme para mais informações!'
-  ]
-
-  let currentMessage = messages[completedCycles]
-
-  const typeMessage = (progressPercent) => {
-    const toType = Math.floor(progressPercent)
-    if (toType > typed) {
-      typed = toType
-      textA.text = currentMessage.slice(0, typed)
-      textA.x = (barX + barWidth / 2) - textA.width / 2
-    }
-  }
 
   app.ticker.add(() => {
     map.update()
-    progress += 0.002
-
-    if (progress >= 1) {
-      progress = 0
-      completedCycles++
-
-      const index = completedCycles % messages.length
-      currentMessage = messages[index]
-      typed = 0
-    }
-
-    loadingBar.update(progress)
-    const percentage = Math.round(progress * 100)
-    textB.text = `${percentage}%`
-
-    textB.x = (barX + barWidth / 2) - textB.width / 2
-
-    typeMessage(percentage)
   })
 })()

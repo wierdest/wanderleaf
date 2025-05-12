@@ -17,7 +17,7 @@ export class MapDirector {
     this.tiles = []
   }
 
-  construct () {
+  async construct () {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'construct'))
   }
 
@@ -25,9 +25,9 @@ export class MapDirector {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'refine'))
   }
 
-  updateProgress (progress) {
+  updateProgress (message, progress) {
     if (typeof this.progressCallback === 'function') {
-      this.progressCallback(progress)
+      this.progressCallback(message, progress)
     }
   }
 }

@@ -6,36 +6,59 @@ import { Bounds } from './math/Bounds.js'
 import { Vector2 } from './math/Vector2.js'
 
 export class IsometricMapDirector extends MapDirector {
-  construct () {
+  async construct () {
+    this.updateProgress('Iniciando construção...', 0)
+
     this.builder.init()
 
-    // Build ocean
-    this.builder.initBiomeEvaluator(
-      'ocean',
-      new OceanEvaluator(
-        new BiomeContext(
-          this.builder.bounds,
-          ['tile101', ...Array.from({ length: 3 }, (_, i) => `tile${82 + i}`)]
-        )
-      )
-    )
+    const buildSteps = [
+      {
+        label: 'Construindo oceano...',
+        fn: () => {
+          this.builder.initBiomeEvaluator(
+            'ocean',
+            new OceanEvaluator(
+              new BiomeContext(
+                this.builder.bounds,
+                ['tile101', ...Array.from({ length: 3 }, (_, i) => `tile${82 + i}`)]
+              )
+            )
+          )
+        }
+      },
+      {
+        label: 'Construindo lago...',
+        fn: () => {
+          this.builder.initBiomeEvaluator(
+            'lake',
+            new LakeEvaluator(
+              new BiomeContext(
+                new Bounds(new Vector2(-18, -14)),
+                ['tile104'],
+                18,
+                1
+              )
+            )
+          )
+        }
+      },
+      {
+        label: 'Finalizando tiles...',
+        fn: () => {
+          this.tiles = this.builder.buildTiles()
+        }
+      }
+    ]
 
-    // Build a lake
-    this.builder.initBiomeEvaluator(
-      'lake',
-      new LakeEvaluator(
-        new BiomeContext(
-          new Bounds(new Vector2(-18, -14)),
-          ['tile104'],
-          18,
-          1
-        )
-      )
-    )
+    const totalSteps = buildSteps.length
+    for (let i = 0; i < totalSteps; i++) {
+      buildSteps[i].fn()
+      const progress = (i + 1) / (totalSteps + 1)
+      this.updateProgress(buildSteps[i].label, progress)
+      // await new Promise(resolve => setTimeout(resolve, 400))
+    }
 
-    // Build and return tiles
-    this.tiles = this.builder.buildTiles()
-    this.updateProgress(0.1)
+    this.updateProgress('Construiu mapa básico!', 0.95)
 
     return this.tiles
   }
@@ -48,12 +71,11 @@ export class IsometricMapDirector extends MapDirector {
     ]
     for (let i = 0; i < refinementSteps.length; i++) {
       const progress = 0.1 + (0.2 * (i + 1)) / refinementSteps.length
-      this.updateProgress(progress)
+      this.updateProgress('Refinando mapa...', progress)
       await refinementSteps[i]()
     }
 
-    console.log('Refinement complete')
-    this.updateProgress(1)
+    this.updateProgress('Refinamento do mapa concluído!', 1)
   }
 
   // These are all stubs, we are going to implement it for real later

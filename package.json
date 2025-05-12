@@ -34,7 +34,8 @@
   },
   "standard": {
     "globals": [
-      "requestAnimationFrame"
+      "requestAnimationFrame",
+      "cancelAnimationFrame"
     ]
   }
 }
