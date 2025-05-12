@@ -63,7 +63,7 @@ export class LoadingBar {
 
   update (message, progress) {
     this.foreground.width = this.fullWidth * progress
-    this.percentage.text = `${Math.round(progress * 100)}`
+    this.percentage.text = `${Math.round(progress * 100)}%`
     this.setMessage(message)
     this.updateTyping()
   }
