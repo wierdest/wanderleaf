@@ -14,7 +14,7 @@ export class MapTextureLoader extends BaseLoader {
     const spritesheet = await this.spriteLoader.load({ entity: 'map' })
     const isometricMapTextureRenderer = new IsometricMapTextureRenderer(this.renderer, spritesheet, this.tiles)
     const texture = isometricMapTextureRenderer.render()
-    progressCallback(0.15)
+    progressCallback('Carregou textura do mapa!', 1)
     return texture
   }
 }
