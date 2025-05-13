@@ -17,3 +17,8 @@ export const DIRECTION_MAP = {
   '0,-1': Direction.UP,
   '0,1': Direction.DOWN
 }
+
+export const ACTION_KEYS = {
+  JUMP: 'Space',
+  RUN: 'ShiftLeft'
+}
