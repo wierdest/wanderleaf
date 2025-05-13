@@ -13,6 +13,7 @@ import { IsometricMapBuilder } from './game/IsometricMapBuilder.js'
 import { IsometricMapDirector } from './game/IsometricMapDirector.js'
 import { GameMap } from './game/GameMap.js'
 import { MapTextureLoader } from './game/MapTextureLoader.js'
+import { ActionControls } from './game/ActionControls.js'
 
 const app = new Application()
 
@@ -117,6 +118,10 @@ async function setup () {
   const arrowControls = new ArrowControls(player)
 
   arrowControls.attach()
+
+  const actionControls = new ActionControls(player)
+
+  actionControls.attach()
 
   // Map knows about the player so it allows movement
 
