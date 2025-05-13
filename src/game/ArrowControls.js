@@ -4,7 +4,6 @@ import { ARROW_CONTROLS, DIRECTION_MAP } from './constants/controls.js'
 export class ArrowControls extends BaseControls {
   constructor (target) {
     super(target)
-    this.target = target
     this.pressedKeys = new Set()
     this.handleKeyDown = this.handleKeyDown.bind(this)
     this.handleKeyUp = this.handleKeyUp.bind(this)
