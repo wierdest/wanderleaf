@@ -86,6 +86,10 @@ Delegamos a responsabilidade de registrar o progresso do processo a um **BaseLoa
 
 **StatesLoader** e **SpriteLoader** implementam **BaseLoader**.
 
+**LoadingBar** encapsula labels de texto. Utilizamos `loadingBar.update(message, progress)` como callback de progresso para os loaders, para ter uma noção real da alocação de recursos.
+
+Seguindo com o projeto, implementaremos os outros 6 estados do jogador 🔨
+
 
 A partir daí teremos uma estrutura propícia ao encapsulamento da lógica inicial do jogo, tendo duas opções de caminhos:
 
@@ -101,7 +105,7 @@ As ramificações desses caminhos:
         - possibilidade de iniciar a conexão com IA, já que poderemos adicionar mais facilmente um outlet de interação
     
     - O refinamento do carregamento de elementos de jogo possibilita...
-        - implementar os outros seis estados do jogador
+        - implementar os outros seis estados do jogador 🔨
         - refatorar o **Player** para utilizar a FSM
         - utilizar o tileset em sua totalidade
         - iniciar a estratégia de organização por zIndex, na relação entities x mapa
