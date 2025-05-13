@@ -73,4 +73,18 @@ export class Player extends Controllable {
             newY < this.screenHeightLimit
     )
   }
+
+  onActionInput (code) {
+    // TODO implement this for real
+    // decide on which state to begin with...
+    // run = check if it's moving
+    // jump = implement movement using Body
+    // attack = seems to be simpler
+    console.log(`Pressionou a tecla ${code}`)
+  }
+
+  onActionStop (code) {
+    // TODO implement this fr
+    console.log(`Largou a tecla ${code}`)
+  }
 }
