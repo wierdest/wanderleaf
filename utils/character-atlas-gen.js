@@ -28,6 +28,8 @@ const totalFrames = (state) => {
       return 14
     case 'walk':
       return 9
+    case 'run':
+      return 5
     default:
       console.warn(`No total frame count defined for state: ${state}`)
       return 1 // fallback or throw an error depending on your needs
