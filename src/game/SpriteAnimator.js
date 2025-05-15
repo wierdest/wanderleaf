@@ -1,5 +1,5 @@
 import { AnimatedSprite } from 'pixi.js'
-import { Direction } from './enums/Direction.js'
+import { DIRECTION } from './constants/controls.js'
 
 export class SpriteAnimator {
   constructor (container, animations, name, defaultDirection) {
@@ -8,7 +8,7 @@ export class SpriteAnimator {
     this.currentDirection = defaultDirection
 
     this.sprites = {}
-    for (const dir of Object.values(Direction)) {
+    for (const dir of Object.values(DIRECTION)) {
       const anim = new AnimatedSprite(animations[dir])
       anim.animationSpeed = 0.1666
       anim.visible = false

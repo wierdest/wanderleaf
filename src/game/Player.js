@@ -1,6 +1,6 @@
 import { Body } from './Body.js'
 import { Controllable } from './controls/Controllable.js'
-import { State } from './enums/State.js'
+import { STATE } from './constants/state.js'
 
 export class Player extends Controllable {
   constructor (character, animators, initialPosition, bounds) {
@@ -8,7 +8,8 @@ export class Player extends Controllable {
     this.character = character
     // this code is going to be moved to the FSM!!!...
     this.animators = new Map(animators.map(a => [a.name, a]))
-    this.state = State.IDLE
+    this.state = STATE.IDLE
+    this.actionState = STATE.EMPTY
     this.animator = this.animators.get(this.state)
     this.body = new Body(() => this.animator.anim)
     this.body.setPosition(initialPosition.x, initialPosition.y)
@@ -44,16 +45,17 @@ export class Player extends Controllable {
     }
 
     if (pressDuration > this.getMovementThreshold()) {
-      this.changeState(State.WALK)
+      const isRunning = this.actionState === STATE.RUN
+      this.changeState(isRunning ? STATE.RUN : STATE.WALK)
 
       if (this.canMove(dx, dy)) {
-        this.body.move(dx, dy)
+        this.body.move(dx, dy, isRunning)
       }
     }
   }
 
   onControlStop () {
-    this.changeState(State.IDLE)
+    this.changeState(STATE.IDLE)
   }
 
   getMovementThreshold () {
@@ -74,14 +76,15 @@ export class Player extends Controllable {
     )
   }
 
-  onActionInput (code) {
+  onActionInput (key) {
     // TODO implement this for real
-
-    console.log(`Pressionou a tecla ${code}`)
+    this.actionState = STATE[`${key}`]
+    console.log(`Pressionou a tecla ${key}, Player tem action state ${this.actionState}`)
   }
 
-  onActionStop (code) {
+  onActionStop (key) {
     // TODO implement this fr
-    console.log(`Largou a tecla ${code}`)
+    console.log(`Largou a tecla ${key}`)
+    this.actionState = STATE.EMPTY
   }
 }

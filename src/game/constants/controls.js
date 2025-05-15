@@ -1,24 +1,33 @@
-import { Direction } from '../enums/Direction.js'
+export const DIRECTION = Object.freeze({
+  UP: 'up',
+  DOWN: 'down',
+  LEFT: 'left',
+  RIGHT: 'right',
+  UP_LEFT: 'upleft',
+  UP_RIGHT: 'upright',
+  DOWN_LEFT: 'downleft',
+  DOWN_RIGHT: 'downright'
+})
 
-export const ARROW_CONTROLS = {
+export const ARROW_CONTROLS = Object.freeze({
   UP: 'ArrowUp',
   DOWN: 'ArrowDown',
   LEFT: 'ArrowLeft',
   RIGHT: 'ArrowRight'
-}
+})
 
-export const DIRECTION_MAP = {
-  '-1,-1': Direction.UP_LEFT,
-  '1,-1': Direction.UP_RIGHT,
-  '-1,1': Direction.DOWN_LEFT,
-  '1,1': Direction.DOWN_RIGHT,
-  '-1,0': Direction.LEFT,
-  '1,0': Direction.RIGHT,
-  '0,-1': Direction.UP,
-  '0,1': Direction.DOWN
-}
+export const DIRECTION_MAP = Object.freeze({
+  '-1,-1': DIRECTION.UP_LEFT,
+  '1,-1': DIRECTION.UP_RIGHT,
+  '-1,1': DIRECTION.DOWN_LEFT,
+  '1,1': DIRECTION.DOWN_RIGHT,
+  '-1,0': DIRECTION.LEFT,
+  '1,0': DIRECTION.RIGHT,
+  '0,-1': DIRECTION.UP,
+  '0,1': DIRECTION.DOWN
+})
 
-export const ACTION_KEYS = {
+export const ACTION_KEYS = Object.freeze({
   JUMP: 'Space',
   RUN: 'ShiftLeft'
-}
+})

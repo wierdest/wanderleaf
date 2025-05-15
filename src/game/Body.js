@@ -12,6 +12,8 @@ export class Body {
     this._y = 0
     this.weight = 1
     this.speed = 1.6
+    this.walkSpeed = this.speed
+    this.runningSpeed = this.speed * 2
   }
 
   setPosition (x, y) {
@@ -27,10 +29,11 @@ export class Body {
     return { x: sprite.x, y: sprite.y }
   }
 
-  move (dx, dy) {
+  move (dx, dy, isRunning) {
     const sprite = this.getSprite()
-    sprite.x += dx * this.speed
-    sprite.y += dy * this.speed
+    const speed = isRunning ? this.runningSpeed : this.walkSpeed
+    sprite.x += dx * speed
+    sprite.y += dy * speed
     this._x = sprite.x
     this._y = sprite.y
   }
