@@ -20,22 +20,24 @@ export class ActionControls extends BaseControls {
   }
 
   handleKeyDown (event) {
-    if (!Object.values(ACTION_KEYS).includes(event.code)) return
+    const actionKey = Object.keys(ACTION_KEYS).find(key => ACTION_KEYS[key] === event.code)
+    if (!actionKey) return
 
-    this.pressedKeys.add(event.code)
+    this.pressedKeys.add(actionKey)
 
     if (typeof this.target?.onActionInput === 'function') {
-      this.target.onActionInput(event.code)
+      this.target.onActionInput(actionKey)
     }
   }
 
   handleKeyUp (event) {
-    this.pressedKeys.delete(event.code)
+    const actionKey = Object.keys(ACTION_KEYS).find(key => ACTION_KEYS[key] === event.code)
+    if (!actionKey) return
 
-    if (!Object.values(ACTION_KEYS).includes(event.code)) return
+    this.pressedKeys.delete(actionKey)
 
     if (typeof this.target?.onActionStop === 'function') {
-      this.target.onActionStop(event.code)
+      this.target.onActionStop(actionKey)
     }
   }
 }
