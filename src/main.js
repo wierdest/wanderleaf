@@ -90,7 +90,8 @@ async function setup () {
       },
       states: [
         { name: State.IDLE, defaultDirection: Direction.DOWN },
-        { name: State.WALK, defaultDirection: Direction.DOWN }
+        { name: State.WALK, defaultDirection: Direction.DOWN },
+        { name: State.RUN, defaultDirection: Direction.DOWN }
       ]
     }
   ]
