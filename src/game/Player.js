@@ -45,10 +45,11 @@ export class Player extends Controllable {
     }
 
     if (pressDuration > this.getMovementThreshold()) {
-      this.changeState(STATE.WALK)
+      const isRunning = this.actionState === STATE.RUN
+      this.changeState(isRunning ? STATE.RUN : STATE.WALK)
 
       if (this.canMove(dx, dy)) {
-        this.body.move(dx, dy)
+        this.body.move(dx, dy, isRunning)
       }
     }
   }
@@ -77,8 +78,8 @@ export class Player extends Controllable {
 
   onActionInput (key) {
     // TODO implement this for real
-    console.log(`Pressionou a tecla ${key}`)
     this.actionState = STATE[`${key}`]
+    console.log(`Pressionou a tecla ${key}, Player tem action state ${this.actionState}`)
   }
 
   onActionStop (key) {
