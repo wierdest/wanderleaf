@@ -1,10 +1,9 @@
 import { Application, Text, TextStyle, Assets } from 'pixi.js'
 import { ArrowControls } from './game/ArrowControls.js'
-import { Direction } from './game/enums/Direction.js'
 import { Player } from './game/Player.js'
 import { Character } from './game/Character.js'
 import { StatesLoader } from './game/StatesLoader.js'
-import { State } from './game/enums/State.js'
+import { STATE } from './game/constants/state.js'
 import { Vector2 } from './game/math/Vector2.js'
 import { Bounds } from './game/math/Bounds.js'
 import { LoadingBar } from './game/LoadingBar.js'
@@ -13,6 +12,8 @@ import { IsometricMapBuilder } from './game/IsometricMapBuilder.js'
 import { IsometricMapDirector } from './game/IsometricMapDirector.js'
 import { GameMap } from './game/GameMap.js'
 import { MapTextureLoader } from './game/MapTextureLoader.js'
+import { ActionControls } from './game/ActionControls.js'
+import { DIRECTION } from './game/constants/controls.js'
 
 const app = new Application()
 
@@ -88,8 +89,9 @@ async function setup () {
         container: playerContainer
       },
       states: [
-        { name: State.IDLE, defaultDirection: Direction.DOWN },
-        { name: State.WALK, defaultDirection: Direction.DOWN }
+        { name: STATE.IDLE, defaultDirection: DIRECTION.DOWN },
+        { name: STATE.WALK, defaultDirection: DIRECTION.DOWN },
+        { name: STATE.RUN, defaultDirection: DIRECTION.DOWN }
       ]
     }
   ]
@@ -117,6 +119,10 @@ async function setup () {
   const arrowControls = new ArrowControls(player)
 
   arrowControls.attach()
+
+  const actionControls = new ActionControls(player)
+
+  actionControls.attach()
 
   // Map knows about the player so it allows movement
 

@@ -22,4 +22,12 @@ export class Controllable {
   canMove (dx, dy) {
     throw new Error(NOT_IMPLEMENTED(this.contructor.name, 'movementThreshold'))
   }
+
+  onActionInput (code) {
+    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'onActionInput'))
+  }
+
+  onActionStop (code) {
+    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'onActionStop'))
+  }
 }
