@@ -91,7 +91,8 @@ async function setup () {
       states: [
         { name: STATE.IDLE, defaultDirection: DIRECTION.DOWN },
         { name: STATE.WALK, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.RUN, defaultDirection: DIRECTION.DOWN }
+        { name: STATE.RUN, defaultDirection: DIRECTION.DOWN },
+        { name: STATE.JUMP, defaultDirection: DIRECTION.DOWN }
       ]
     }
   ]
