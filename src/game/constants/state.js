@@ -2,5 +2,6 @@ export const STATE = Object.freeze({
   EMPTY: '',
   IDLE: 'idle',
   WALK: 'walk',
-  RUN: 'run'
+  RUN: 'run',
+  JUMP: 'jump'
 })

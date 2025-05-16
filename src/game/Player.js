@@ -77,14 +77,10 @@ export class Player extends Controllable {
   }
 
   onActionInput (key) {
-    // TODO implement this for real
     this.actionState = STATE[`${key}`]
-    console.log(`Pressionou a tecla ${key}, Player tem action state ${this.actionState}`)
   }
 
   onActionStop (key) {
-    // TODO implement this fr
-    console.log(`Largou a tecla ${key}`)
     this.actionState = STATE.EMPTY
   }
 }

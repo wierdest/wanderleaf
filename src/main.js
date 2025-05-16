@@ -81,7 +81,7 @@ async function setup () {
     console.log('Finished refining map!!')
   })
 
-  // Loads a  character with only 2 states
+  // Loads a  character
   const entities = [
     {
       entity: {
@@ -91,7 +91,8 @@ async function setup () {
       states: [
         { name: STATE.IDLE, defaultDirection: DIRECTION.DOWN },
         { name: STATE.WALK, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.RUN, defaultDirection: DIRECTION.DOWN }
+        { name: STATE.RUN, defaultDirection: DIRECTION.DOWN },
+        { name: STATE.JUMP, defaultDirection: DIRECTION.DOWN }
       ]
     }
   ]
