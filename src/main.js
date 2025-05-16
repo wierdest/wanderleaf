@@ -81,7 +81,7 @@ async function setup () {
     console.log('Finished refining map!!')
   })
 
-  // Loads a  character with only 2 states
+  // Loads a  character
   const entities = [
     {
       entity: {
