@@ -33,6 +33,13 @@ export class Player extends Controllable {
         this.body.refresh()
       }
       this.animator.play()
+      if (this.state === STATE.JUMP) {
+        this.body.jump()
+      }
+      if (this.state === STATE.IDLE) {
+        this.hasAppliedJumpFrame10 = false
+        this.hasAppliedJumpFrame5 = false
+      }
     }
   }
 
