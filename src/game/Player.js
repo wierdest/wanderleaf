@@ -86,12 +86,15 @@ export class Player extends Controllable {
   }
 
   onActionInput (key) {
+    if (this.state === STATE.RUN && key === 'jump') {
+      return this.changeState(STATE.RUNNING_JUMP)
+    }
+
     this.actionState = STATE[`${key}`]
     // Only allow jump if in IDLE
     if (this.state === STATE.IDLE && this.actionState === STATE.JUMP) {
-      this.changeState(this.actionState)
+      return this.changeState(this.actionState)
     }
-    // TODO Next state: RUN JUMP
   }
 
   onActionStop (key) {
