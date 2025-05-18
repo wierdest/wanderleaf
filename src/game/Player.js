@@ -20,6 +20,7 @@ export class Player extends Controllable {
     this.screenWidthLimit = bounds.getMaxX()
     this.screenHeightMargin = bounds.getMinY()
     this.screenHeightLimit = bounds.getMaxY()
+    this.direction = DIRECTION.DOWN
   }
 
   changeState (newState) {
