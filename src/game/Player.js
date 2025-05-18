@@ -1,6 +1,7 @@
 import { Body } from './Body.js'
 import { Controllable } from './controls/Controllable.js'
-import { STATE } from './constants/state.js'
+import { STATE } from './constants/states.js'
+import { DIRECTION } from './constants/controls.js'
 
 export class Player extends Controllable {
   constructor (character, animators, initialPosition, bounds) {

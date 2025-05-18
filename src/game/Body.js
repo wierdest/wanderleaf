@@ -1,3 +1,6 @@
+import { INVALID_ARGUMENT } from './constants/errors.js'
+import { GRAVITY, JUMP_STRENGTH, SPEED } from './constants/physics.js'
+
 export class Body {
   /**
      *
