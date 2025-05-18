@@ -1,4 +1,4 @@
-import { IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/error.js'
+import { IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/errors.js'
 
 export class Controllable {
   constructor () {
