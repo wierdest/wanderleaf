@@ -53,4 +53,29 @@ export class Body {
     sprite.x = this._x
     sprite.y = this._y
   }
+
+  jump () {
+    this.hasJumped = false
+    if (!this.isJumping) {
+      this.verticalVelocity = -this.jumpStrength
+      this.isJumping = true
+      this._groundY = this._y
+    }
+  }
+
+  update (shouldJump) {
+    if (shouldJump && !this.hasJumped) {
+      const sprite = this.getSprite()
+      this.verticalVelocity += this.gravity
+      sprite.y += this.verticalVelocity
+
+      if (sprite.y >= this._groundY) {
+        this._y = this._groundY
+        sprite.y = this._y
+        this.verticalVelocity = 0
+        this.hasJumped = true
+        this.isJumping = false
+      }
+    }
+  }
 }
