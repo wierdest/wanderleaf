@@ -14,7 +14,7 @@ export class Body {
     this._x = 0
     this._y = 0
     this.weight = 1
-    this.speed = 1.6
+    this.speed = SPEED
     this.walkSpeed = this.speed
     this.runningSpeed = this.speed * 2
   }
