@@ -147,5 +147,7 @@ async function setup () {
 
   app.ticker.add(() => {
     map.update()
+    const { shouldJump } = player.update()
+    player.body.update(shouldJump)
   })
 })()
