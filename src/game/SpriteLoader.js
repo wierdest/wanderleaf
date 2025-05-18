@@ -1,6 +1,6 @@
 import { Assets, Spritesheet } from 'pixi.js'
 import { ASSETS, ATLASES } from './constants/assets.js'
-import { FAILED_TO_FETCH_MANIFEST } from './constants/error.js'
+import { FAILED_TO_FETCH_MANIFEST } from './constants/errors.js'
 import { BaseLoader } from './loaders/BaseLoader.js'
 /**
  * Sprite Loader = loads the sprites for each state[direction].animations

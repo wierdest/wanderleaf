@@ -3,7 +3,7 @@ import { ArrowControls } from './game/ArrowControls.js'
 import { Player } from './game/Player.js'
 import { Character } from './game/Character.js'
 import { StatesLoader } from './game/StatesLoader.js'
-import { STATE } from './game/constants/state.js'
+import { STATE } from './game/constants/states.js'
 import { Vector2 } from './game/math/Vector2.js'
 import { Bounds } from './game/math/Bounds.js'
 import { LoadingBar } from './game/LoadingBar.js'
@@ -81,7 +81,7 @@ async function setup () {
     console.log('Finished refining map!!')
   })
 
-  // Loads a  character with only 2 states
+  // Loads a  character
   const entities = [
     {
       entity: {
@@ -91,7 +91,8 @@ async function setup () {
       states: [
         { name: STATE.IDLE, defaultDirection: DIRECTION.DOWN },
         { name: STATE.WALK, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.RUN, defaultDirection: DIRECTION.DOWN }
+        { name: STATE.RUN, defaultDirection: DIRECTION.DOWN },
+        { name: STATE.JUMP, defaultDirection: DIRECTION.DOWN }
       ]
     }
   ]
@@ -146,5 +147,7 @@ async function setup () {
 
   app.ticker.add(() => {
     map.update()
+    const { shouldJump } = player.update()
+    player.body.update(shouldJump)
   })
 })()

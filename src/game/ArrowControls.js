@@ -45,6 +45,7 @@ export class ArrowControls extends BaseControls {
   }
 
   handleKeyUp (event) {
+    if (!Object.values(ARROW_CONTROLS).includes(event.key)) return
     this.pressedKeys.delete(event.key)
     this.pressDuration = 0
     if (this.pressedKeys.size === 0) {

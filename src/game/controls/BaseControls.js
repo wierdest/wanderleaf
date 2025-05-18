@@ -1,4 +1,4 @@
-import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/error.js'
+import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/errors.js'
 import { Controllable } from './Controllable.js'
 
 export class BaseControls {

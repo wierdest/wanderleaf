@@ -38,9 +38,9 @@ export class SpriteAnimator {
   }
 
   play () {
+    this.anim.currentFrame = 0
     this.anim.visible = true
     this.anim.play()
-    this.container.addChild(this.anim)
   }
 
   stop () {

@@ -1,5 +1,5 @@
 import { DEFAULT_LAND_TILE_TEXTURE } from '../constants/assets.js'
-import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED, UNDEFINED } from '../constants/error.js'
+import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED, UNDEFINED } from '../constants/errors.js'
 import { Vector2 } from '../math/Vector2.js'
 
 export class MapBuilder {

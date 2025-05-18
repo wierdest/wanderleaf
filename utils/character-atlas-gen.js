@@ -1,6 +1,6 @@
 import path from 'path'
 import { promises as fs } from 'fs'
-import { Direction } from '../src/game/enums/Direction.js'
+import { DIRECTION } from '../src/game/constants/controls.js'
 
 /**
  * Atlas generator utility
@@ -30,13 +30,15 @@ const totalFrames = (state) => {
       return 9
     case 'run':
       return 5
+    case 'jump':
+      return 11
     default:
       console.warn(`No total frame count defined for state: ${state}`)
       return 1 // fallback or throw an error depending on your needs
   }
 }
 
-const DIRECTIONS = Object.values(Direction)
+const DIRECTIONS = Object.values(DIRECTION)
 
 async function generateIndividualAtlases () {
   const files = await fs.readdir(resolvedInputDir)

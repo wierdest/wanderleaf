@@ -1,5 +1,5 @@
 import { createNoise2D } from 'simplex-noise'
-import { INVALID_ARGUMENT } from '../constants/error.js'
+import { INVALID_ARGUMENT } from '../constants/errors.js'
 import { BiomeEvaluator } from './BiomeEvaluator.js'
 
 export class LakeEvaluator extends BiomeEvaluator {
