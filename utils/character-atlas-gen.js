@@ -32,6 +32,8 @@ const totalFrames = (state) => {
       return 5
     case 'jump':
       return 11
+    case 'running_jump':
+      return 8
     default:
       console.warn(`No total frame count defined for state: ${state}`)
       return 1 // fallback or throw an error depending on your needs
