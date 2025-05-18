@@ -17,6 +17,13 @@ export class Body {
     this.speed = SPEED
     this.walkSpeed = this.speed
     this.runningSpeed = this.speed * 2
+
+    this.verticalVelocity = 0
+    this.gravity = GRAVITY
+    this._groundY = this._y
+    this.jumpStrength = JUMP_STRENGTH
+    this.hasJumped = false
+    this.isJumping = false
   }
 
   setPosition (x, y) {
