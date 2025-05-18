@@ -8,7 +8,7 @@ export class Body {
      */
   constructor (getSprite) {
     if (typeof getSprite !== 'function') {
-      throw new TypeError('Body expects getSprite function')
+      throw new TypeError(INVALID_ARGUMENT(super.constructor.name, 'getSprite'))
     }
     this.getSprite = getSprite
     this._x = 0
