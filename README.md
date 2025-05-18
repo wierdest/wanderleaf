@@ -94,7 +94,7 @@ Seguindo com o projeto, implementaremos os outros 6 estados do jogador 🔨
 A partir daí teremos uma estrutura propícia ao encapsulamento da lógica inicial do jogo, tendo duas opções de caminhos:
 
     - Criaremos o protótipo da tela inicial.
-    - Refinaremos o carregamento do mapa e da nossa única entidade (o jogador)
+    - Refinaremos o carregamento do mapa e da nossa única entidade (o jogador) 🔨
 
 As ramificações desses caminhos:
 
@@ -107,9 +107,11 @@ As ramificações desses caminhos:
     - O refinamento do carregamento de elementos de jogo possibilita...
         - implementar os outros seis estados do jogador 🔨
             - IDLE ✅
-            - WALK ✅
-            - RUN  ✅
-            - JUMP 🔨
+            - WALK ✅ (setas)
+            - RUN  ✅ (shift esquerdo enquanto anda)
+            - JUMP ✅ (quando parado, barra de espaço ativa o pulo)
+            - RUNNING JUMP ✅ (quando correndo, barra de espaço faz o pulo)
+            - MELEE ATTACK 🔨
         - refatorar o **Player** para utilizar a FSM
         - utilizar o tileset em sua totalidade
         - iniciar a estratégia de organização por zIndex, na relação entities x mapa

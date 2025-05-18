@@ -137,14 +137,7 @@ async function setup () {
   const barWidth = 300
   const barX = (app.screen.width - barWidth) / 2
 
-  const textZ = new Text({
-    text: 'Use as setas para mover o personagem na tela',
-    style: uiTextStyle
-  })
-  textZ.x = barX - textZ.width / 4
-  textZ.y = 0
-
-  uiContainer.addChild(textZ)
+  criarInstrucoesDoPrototipo(uiTextStyle, barX, uiContainer)
 
   app.ticker.add(() => {
     map.update()
@@ -152,3 +145,22 @@ async function setup () {
     player.body.update(shouldJump)
   })
 })()
+
+function criarInstrucoesDoPrototipo (style, x, container) {
+  const mensagens = [
+    '-> SETAS movem o personagem na tela',
+    '-> SHIFT ESQUERDO enquanto move para correr',
+    '-> ESPAÇO para pular.',
+    '-> ESPAÇO enquanto corre para pular ao correr.'
+  ]
+
+  for (let i = 0; i < mensagens.length; i++) {
+    const text = new Text({
+      text: mensagens[i],
+      style
+    })
+    text.x = x
+    text.y = text.height * i
+    container.addChild(text)
+  }
+}
