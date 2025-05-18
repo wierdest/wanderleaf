@@ -87,7 +87,7 @@ export class Player extends Controllable {
 
   onActionInput (key) {
     if (this.state === STATE.RUN && key === 'jump') {
-      return this.changeState(STATE.RUNNING_JUMP)
+      return this.changeState(STATE.RUNNINGJUMP)
     }
 
     this.actionState = STATE[`${key}`]
