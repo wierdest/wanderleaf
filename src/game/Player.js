@@ -55,10 +55,12 @@ export class Player extends Controllable {
 
     if (pressDuration > this.getMovementThreshold()) {
       const isRunning = this.actionState === STATE.RUN
-      this.changeState(isRunning ? STATE.RUN : STATE.WALK)
+      const isRunningJumping = this.actionState === STATE.RUNNINGJUMP
+      const runState = isRunningJumping ? STATE.RUNNINGJUMP : STATE.RUN
+      this.changeState(isRunning || isRunningJumping ? runState : STATE.WALK)
 
       if (this.canMove(dx, dy)) {
-        this.body.move(dx, dy, isRunning)
+        this.body.move(dx, dy, isRunning || isRunningJumping)
       }
     }
   }
@@ -86,12 +88,16 @@ export class Player extends Controllable {
   }
 
   onActionInput (key) {
+    if (this.state === STATE.RUN && key === 'JUMP') {
+      this.actionState = STATE.RUNNINGJUMP
+      return
+    }
+
     this.actionState = STATE[`${key}`]
     // Only allow jump if in IDLE
     if (this.state === STATE.IDLE && this.actionState === STATE.JUMP) {
-      this.changeState(this.actionState)
+      return this.changeState(this.actionState)
     }
-    // TODO Next state: RUN JUMP
   }
 
   onActionStop (key) {
@@ -110,6 +116,14 @@ export class Player extends Controllable {
         this.changeState(STATE.IDLE)
       }
     }
+
+    if (this.state === STATE.RUNNINGJUMP) {
+      if (this.animator.anim.currentFrame === 7) {
+        this.actionState = STATE.RUN
+        this.changeState(STATE.RUN)
+      }
+    }
+
     return { shouldJump: this.hasAppliedJumpFrame5 }
   }
 }
