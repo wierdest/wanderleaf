@@ -1,5 +1,5 @@
 import { Container } from 'pixi.js'
-import { CONTAINER_ALREADY_EXISTS, CONTAINER_DOES_NOT_EXIST, IS_SINGLETON, NOT_INITIALIZED } from './constants/error.js'
+import { CONTAINER_ALREADY_EXISTS, CONTAINER_DOES_NOT_EXIST, IS_SINGLETON, NOT_INITIALIZED } from './constants/errors.js'
 
 export class StageManager {
   static #instance = null

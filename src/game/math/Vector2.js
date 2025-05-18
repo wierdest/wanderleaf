@@ -1,4 +1,4 @@
-import { INVALID_ARGUMENT } from '../constants/error.js'
+import { INVALID_ARGUMENT } from '../constants/errors.js'
 
 export class Vector2 {
   constructor (x, y) {

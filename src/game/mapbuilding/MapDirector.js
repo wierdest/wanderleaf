@@ -1,4 +1,4 @@
-import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/error.js'
+import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/errors.js'
 
 export class MapDirector {
   constructor (builder, progressCallback = () => {}) {
