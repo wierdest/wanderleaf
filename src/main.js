@@ -139,15 +139,6 @@ async function setup () {
 
   criarInstrucoesDoPrototipo(uiTextStyle, barX, uiContainer)
 
-  // const textZ = new Text({
-  //   text: 'Use as setas para mover o personagem na tela',
-  //   style: uiTextStyle
-  // })
-  // textZ.x = barX - textZ.width / 4
-  // textZ.y = 0
-
-  uiContainer.addChild(textZ)
-
   app.ticker.add(() => {
     map.update()
     const { shouldJump } = player.update()
