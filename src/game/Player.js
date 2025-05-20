@@ -111,7 +111,12 @@ export class Player extends Controllable {
 
   onActionStop (key) {
     if (key === 'JUMP') return
+
     this.actionState = STATE.EMPTY
+
+    if (key === 'MELEE') {
+      this.changeState(STATE.IDLE)
+    }
   }
 
   update () {
