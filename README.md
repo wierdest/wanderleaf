@@ -112,7 +112,10 @@ As ramificações desses caminhos:
             - JUMP ✅ (quando parado, barra de espaço ativa o pulo)
             - RUNNING JUMP ✅ (quando correndo, barra de espaço faz o pulo)
             - MELEE ATTACK ✅ (dá um soco com a letra E)
-            - BLOCK 🔨 (se defende, com a letra Q)
+            - BLOCK ✅ (se defende, com a letra Q)
+        
+        - implementar sombra no jogador 🔨
+
         - refatorar o **Player** para utilizar a FSM
         - utilizar o tileset em sua totalidade
         - iniciar a estratégia de organização por zIndex, na relação entities x mapa

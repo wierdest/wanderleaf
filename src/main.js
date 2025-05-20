@@ -82,6 +82,7 @@ async function setup () {
   })
 
   // Loads a  character
+  // TODO defaultDirection should be a property of the entity and not of the state
   const entities = [
     {
       entity: {
@@ -94,7 +95,8 @@ async function setup () {
         { name: STATE.RUN, defaultDirection: DIRECTION.DOWN },
         { name: STATE.JUMP, defaultDirection: DIRECTION.DOWN },
         { name: STATE.RUNNINGJUMP, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.MELEE, defaultDirection: DIRECTION.DOWN }
+        { name: STATE.MELEE, defaultDirection: DIRECTION.DOWN },
+        { name: STATE.BLOCK, defaultDirection: DIRECTION.DOWN, noLoop: true }
       ]
     }
   ]
@@ -153,7 +155,9 @@ function criarInstrucoesDoPrototipo (style, x, container) {
     '-> SHIFT ESQUERDO enquanto move para correr',
     '-> ESPAÇO para pular.',
     '-> ESPAÇO enquanto corre para pular ao correr.',
-    '-> TECLA "E" para socar (melee attack)'
+    '-> TECLA "E" para socar (melee attack)',
+    '-> TECLA "Q" para bloquear'
+
   ]
 
   for (let i = 0; i < mensagens.length; i++) {

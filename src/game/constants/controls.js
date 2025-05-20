@@ -30,5 +30,6 @@ export const DIRECTION_MAP = Object.freeze({
 export const ACTION_KEYS = Object.freeze({
   JUMP: 'Space',
   RUN: 'ShiftLeft',
-  MELEE: 'KeyE'
+  MELEE: 'KeyE',
+  BLOCK: 'KeyQ'
 })

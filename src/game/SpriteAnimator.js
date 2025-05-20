@@ -2,7 +2,7 @@ import { AnimatedSprite } from 'pixi.js'
 import { DIRECTION } from './constants/controls.js'
 
 export class SpriteAnimator {
-  constructor (container, animations, name, defaultDirection) {
+  constructor (container, animations, name, defaultDirection, noLoop) {
     this.container = container
 
     this.currentDirection = defaultDirection
@@ -13,6 +13,7 @@ export class SpriteAnimator {
       anim.animationSpeed = 0.1666
       anim.visible = false
       anim.scale = 0.5
+      anim.loop = !noLoop
       this.sprites[dir] = anim
       this.container.addChild(anim)
     }

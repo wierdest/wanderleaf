@@ -33,7 +33,7 @@ export class StatesLoader extends BaseLoader {
     const animators = []
     for (const state of entityStateMapItem.states) {
       const animations = await this.spriteLoader.load({ progressCallback, entity: entityStateMapItem.entity.name, state: state.name })
-      animators.push(new SpriteAnimator(entityStateMapItem.entity.container, animations, state.name, state.defaultDirection))
+      animators.push(new SpriteAnimator(entityStateMapItem.entity.container, animations, state.name, state.defaultDirection, state.noLoop))
     }
     return animators
   }
