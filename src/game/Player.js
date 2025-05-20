@@ -103,10 +103,6 @@ export class Player extends Controllable {
         return this.changeState(this.actionState)
       }
     }
-
-    if (this.state === STATE.IDLE && this.actionState === STATE.MELEE) {
-      return this.changeState(this.actionState)
-    }
   }
 
   onActionStop (key) {
