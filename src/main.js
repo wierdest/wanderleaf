@@ -154,7 +154,9 @@ function criarInstrucoesDoPrototipo (style, x, container) {
     '-> SHIFT ESQUERDO enquanto move para correr',
     '-> ESPAÇO para pular.',
     '-> ESPAÇO enquanto corre para pular ao correr.',
-    '-> TECLA "E" para socar (melee attack)'
+    '-> TECLA "E" para socar (melee attack)',
+    '-> TECLA "Q" para bloquear'
+
   ]
 
   for (let i = 0; i < mensagens.length; i++) {
