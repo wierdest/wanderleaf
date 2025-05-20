@@ -17,6 +17,60 @@
         "w": 256,
         "h": 256
       }
+    },
+    "block-left2": {
+      "frame": {
+        "x": 256,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      }
+    },
+    "block-left3": {
+      "frame": {
+        "x": 512,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      }
+    },
+    "block-left4": {
+      "frame": {
+        "x": 768,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      }
     }
   },
   "meta": {
@@ -30,7 +84,10 @@
   },
   "animations": {
     "left": [
-      "block-left1"
+      "block-left1",
+      "block-left2",
+      "block-left3",
+      "block-left4"
     ]
   }
 }

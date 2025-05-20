@@ -37,7 +37,7 @@ const totalFrames = (state) => {
     case 'melee':
       return 10
     case 'block':
-      return 1
+      return 4
     default:
       console.warn(`No total frame count defined for state: ${state}`)
       return 1 // fallback or throw an error depending on your needs
