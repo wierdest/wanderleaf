@@ -105,13 +105,14 @@ As ramificações desses caminhos:
         - possibilidade de iniciar a conexão com IA, já que poderemos adicionar mais facilmente um outlet de interação
     
     - O refinamento do carregamento de elementos de jogo possibilita...
-        - implementar os outros seis estados do jogador 🔨
+        - implementar os outros estados do jogador 🔨
             - IDLE ✅
             - WALK ✅ (setas)
             - RUN  ✅ (shift esquerdo enquanto anda)
             - JUMP ✅ (quando parado, barra de espaço ativa o pulo)
             - RUNNING JUMP ✅ (quando correndo, barra de espaço faz o pulo)
-            - MELEE ATTACK 🔨
+            - MELEE ATTACK ✅ (dá um soco com a letra E)
+            - RANGED ATTACK 🔨 (lança uma bola de fogo)
         - refatorar o **Player** para utilizar a FSM
         - utilizar o tileset em sua totalidade
         - iniciar a estratégia de organização por zIndex, na relação entities x mapa
