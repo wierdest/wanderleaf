@@ -32,7 +32,7 @@ const totalFrames = (state) => {
       return 5
     case 'jump':
       return 11
-    case 'running_jump':
+    case 'runningjump':
       return 8
     case 'melee':
       return 10
