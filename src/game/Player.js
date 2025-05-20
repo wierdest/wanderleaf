@@ -98,14 +98,11 @@ export class Player extends Controllable {
     if (this.state === STATE.IDLE) {
       if (
         this.actionState === STATE.JUMP ||
-        this.actionState === STATE.MELEE
+        this.actionState === STATE.MELEE ||
+        this.actionState === STATE.BLOCK
       ) {
         return this.changeState(this.actionState)
       }
-    }
-
-    if (this.state === STATE.IDLE && this.actionState === STATE.MELEE) {
-      return this.changeState(this.actionState)
     }
   }
 
@@ -114,7 +111,7 @@ export class Player extends Controllable {
 
     this.actionState = STATE.EMPTY
 
-    if (key === 'MELEE') {
+    if (key === 'MELEE' || key === 'BLOCK') {
       this.changeState(STATE.IDLE)
     }
   }

@@ -5,6 +5,6 @@ export const STATE = Object.freeze({
   RUN: 'run',
   JUMP: 'jump',
   RUNNINGJUMP: 'runningjump',
-  MELEE: 'melee'
-
+  MELEE: 'melee',
+  BLOCK: 'block'
 })
