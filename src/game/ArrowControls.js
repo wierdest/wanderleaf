@@ -1,6 +1,9 @@
 import { BaseControls } from './controls/BaseControls.js'
 import { ARROW_CONTROLS, DIRECTION_MAP } from './constants/controls.js'
 
+// TODO this should allow for better transitioning of directions:
+// it should be easier to stand in idle in all 8 directions
+
 export class ArrowControls extends BaseControls {
   constructor (target) {
     super(target)
