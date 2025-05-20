@@ -1,6 +1,6 @@
 {
   "frames": {
-    "runningjump-downleft1": {
+    "melee-down1": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -18,7 +18,7 @@
         "h": 256
       }
     },
-    "runningjump-downleft2": {
+    "melee-down2": {
       "frame": {
         "x": 256,
         "y": 0,
@@ -36,7 +36,7 @@
         "h": 256
       }
     },
-    "runningjump-downleft3": {
+    "melee-down3": {
       "frame": {
         "x": 512,
         "y": 0,
@@ -54,7 +54,7 @@
         "h": 256
       }
     },
-    "runningjump-downleft4": {
+    "melee-down4": {
       "frame": {
         "x": 768,
         "y": 0,
@@ -72,7 +72,7 @@
         "h": 256
       }
     },
-    "runningjump-downleft5": {
+    "melee-down5": {
       "frame": {
         "x": 0,
         "y": 256,
@@ -90,7 +90,7 @@
         "h": 256
       }
     },
-    "runningjump-downleft6": {
+    "melee-down6": {
       "frame": {
         "x": 256,
         "y": 256,
@@ -108,7 +108,7 @@
         "h": 256
       }
     },
-    "runningjump-downleft7": {
+    "melee-down7": {
       "frame": {
         "x": 512,
         "y": 256,
@@ -126,10 +126,46 @@
         "h": 256
       }
     },
-    "runningjump-downleft8": {
+    "melee-down8": {
       "frame": {
         "x": 768,
         "y": 256,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      }
+    },
+    "melee-down9": {
+      "frame": {
+        "x": 0,
+        "y": 512,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      }
+    },
+    "melee-down10": {
+      "frame": {
+        "x": 256,
+        "y": 512,
         "w": 256,
         "h": 256
       },
@@ -146,24 +182,26 @@
     }
   },
   "meta": {
-    "image": "../GirlSample_RunningJump_DownLeft.png",
+    "image": "../GirlSample_Melee_Down.png",
     "format": "RGBA8888",
     "size": {
       "w": 1024,
-      "h": 512
+      "h": 768
     },
     "scale": 1
   },
   "animations": {
-    "downleft": [
-      "runningjump-downleft1",
-      "runningjump-downleft2",
-      "runningjump-downleft3",
-      "runningjump-downleft4",
-      "runningjump-downleft5",
-      "runningjump-downleft6",
-      "runningjump-downleft7",
-      "runningjump-downleft8"
+    "down": [
+      "melee-down1",
+      "melee-down2",
+      "melee-down3",
+      "melee-down4",
+      "melee-down5",
+      "melee-down6",
+      "melee-down7",
+      "melee-down8",
+      "melee-down9",
+      "melee-down10"
     ]
   }
 }

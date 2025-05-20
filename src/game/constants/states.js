@@ -4,5 +4,7 @@ export const STATE = Object.freeze({
   WALK: 'walk',
   RUN: 'run',
   JUMP: 'jump',
-  RUNNINGJUMP: 'runningjump'
+  RUNNINGJUMP: 'runningjump',
+  MELEE: 'melee'
+
 })

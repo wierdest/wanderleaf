@@ -1,6 +1,6 @@
 {
   "frames": {
-    "running_jump-upright1": {
+    "runningjump-upright1": {
       "frame": {
         "x": 0,
         "y": 0,
@@ -18,7 +18,7 @@
         "h": 256
       }
     },
-    "running_jump-upright2": {
+    "runningjump-upright2": {
       "frame": {
         "x": 256,
         "y": 0,
@@ -36,7 +36,7 @@
         "h": 256
       }
     },
-    "running_jump-upright3": {
+    "runningjump-upright3": {
       "frame": {
         "x": 512,
         "y": 0,
@@ -54,7 +54,7 @@
         "h": 256
       }
     },
-    "running_jump-upright4": {
+    "runningjump-upright4": {
       "frame": {
         "x": 768,
         "y": 0,
@@ -72,7 +72,7 @@
         "h": 256
       }
     },
-    "running_jump-upright5": {
+    "runningjump-upright5": {
       "frame": {
         "x": 0,
         "y": 256,
@@ -90,7 +90,7 @@
         "h": 256
       }
     },
-    "running_jump-upright6": {
+    "runningjump-upright6": {
       "frame": {
         "x": 256,
         "y": 256,
@@ -108,7 +108,7 @@
         "h": 256
       }
     },
-    "running_jump-upright7": {
+    "runningjump-upright7": {
       "frame": {
         "x": 512,
         "y": 256,
@@ -126,7 +126,7 @@
         "h": 256
       }
     },
-    "running_jump-upright8": {
+    "runningjump-upright8": {
       "frame": {
         "x": 768,
         "y": 256,
@@ -156,14 +156,14 @@
   },
   "animations": {
     "upright": [
-      "running_jump-upright1",
-      "running_jump-upright2",
-      "running_jump-upright3",
-      "running_jump-upright4",
-      "running_jump-upright5",
-      "running_jump-upright6",
-      "running_jump-upright7",
-      "running_jump-upright8"
+      "runningjump-upright1",
+      "runningjump-upright2",
+      "runningjump-upright3",
+      "runningjump-upright4",
+      "runningjump-upright5",
+      "runningjump-upright6",
+      "runningjump-upright7",
+      "runningjump-upright8"
     ]
   }
 }
