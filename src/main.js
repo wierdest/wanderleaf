@@ -152,7 +152,8 @@ function criarInstrucoesDoPrototipo (style, x, container) {
     '-> SETAS movem o personagem na tela',
     '-> SHIFT ESQUERDO enquanto move para correr',
     '-> ESPAÇO para pular.',
-    '-> ESPAÇO enquanto corre para pular ao correr.'
+    '-> ESPAÇO enquanto corre para pular ao correr.',
+    '-> TECLA "E" para socar (melee attack)'
   ]
 
   for (let i = 0; i < mensagens.length; i++) {
