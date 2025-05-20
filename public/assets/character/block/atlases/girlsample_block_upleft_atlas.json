@@ -1,0 +1,36 @@
+{
+  "frames": {
+    "block-upleft1": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      },
+      "sourceSize": {
+        "w": 256,
+        "h": 256
+      },
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 256,
+        "h": 256
+      }
+    }
+  },
+  "meta": {
+    "image": "../GirlSample_Block_UpLeft.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1024,
+      "h": 256
+    },
+    "scale": 1
+  },
+  "animations": {
+    "upleft": [
+      "block-upleft1"
+    ]
+  }
+}
