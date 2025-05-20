@@ -82,6 +82,7 @@ async function setup () {
   })
 
   // Loads a  character
+  // TODO defaultDirection should be a property of the entity and not of the state
   const entities = [
     {
       entity: {
