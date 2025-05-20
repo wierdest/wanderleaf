@@ -95,7 +95,7 @@ async function setup () {
         { name: STATE.JUMP, defaultDirection: DIRECTION.DOWN },
         { name: STATE.RUNNINGJUMP, defaultDirection: DIRECTION.DOWN },
         { name: STATE.MELEE, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.BLOCK, defaultDirection: DIRECTION.DOWN }
+        { name: STATE.BLOCK, defaultDirection: DIRECTION.DOWN, noLoop: true }
       ]
     }
   ]
