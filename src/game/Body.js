@@ -1,5 +1,6 @@
 import { INVALID_ARGUMENT } from './constants/errors.js'
 import { GRAVITY, JUMP_STRENGTH, SPEED } from './constants/physics.js'
+import { Vector2 } from './math/Vector2.js'
 
 export class Body {
   /**
@@ -13,6 +14,7 @@ export class Body {
     this.getSprite = getSprite
     this._x = 0
     this._y = 0
+    this._positionVector = new Vector2(0, 0)
     this.weight = 1
     this.speed = SPEED
     this.walkSpeed = this.speed
@@ -20,7 +22,7 @@ export class Body {
 
     this.verticalVelocity = 0
     this.gravity = GRAVITY
-    this._groundY = this._y
+    this.groundY = this._y
     this.jumpStrength = JUMP_STRENGTH
     this.hasJumped = false
     this.isJumping = false
@@ -36,7 +38,9 @@ export class Body {
 
   getPosition () {
     const sprite = this.getSprite()
-    return { x: sprite.x, y: sprite.y }
+    this._positionVector.x = sprite.x
+    this._positionVector.y = sprite.y
+    return this._positionVector
   }
 
   move (dx, dy, isRunning) {
@@ -59,7 +63,7 @@ export class Body {
     if (!this.isJumping) {
       this.verticalVelocity = -this.jumpStrength
       this.isJumping = true
-      this._groundY = this._y
+      this.groundY = this._y
     }
   }
 
@@ -69,8 +73,8 @@ export class Body {
       this.verticalVelocity += this.gravity
       sprite.y += this.verticalVelocity
 
-      if (sprite.y >= this._groundY) {
-        this._y = this._groundY
+      if (sprite.y >= this.groundY) {
+        this._y = this.groundY
         sprite.y = this._y
         this.verticalVelocity = 0
         this.hasJumped = true

@@ -2,6 +2,8 @@ import { Body } from './Body.js'
 import { Controllable } from './controls/Controllable.js'
 import { STATE } from './constants/states.js'
 import { DIRECTION } from './constants/controls.js'
+import { EntityShadow } from './EntityShadow.js'
+import { Vector2 } from './math/Vector2.js'
 
 export class Player extends Controllable {
   constructor (character, animators, initialPosition, bounds) {
@@ -14,6 +16,7 @@ export class Player extends Controllable {
     this.animator = this.animators.get(this.state)
     this.body = new Body(() => this.animator.anim)
     this.body.setPosition(initialPosition.x, initialPosition.y)
+    this.shadow = new EntityShadow(this.animator.container, this.body, new Vector2(64, 79))
     this.animator.play()
 
     this.screenWidthMargin = bounds.getMinX()
@@ -61,6 +64,7 @@ export class Player extends Controllable {
 
       if (this.canMove(dx, dy)) {
         this.body.move(dx, dy, isRunning || isRunningJumping)
+        this.shadow.move(runState)
       }
     }
   }
@@ -94,7 +98,7 @@ export class Player extends Controllable {
     }
 
     this.actionState = STATE[`${key}`]
-    // Only allow jump if in IDLE
+
     if (this.state === STATE.IDLE) {
       if (
         this.actionState === STATE.JUMP ||
@@ -120,11 +124,13 @@ export class Player extends Controllable {
     if (this.state === STATE.JUMP) {
       if (!this.hasAppliedJumpFrame5 && this.animator.anim.currentFrame === 5) {
         this.hasAppliedJumpFrame5 = true
+        this.shadow.move(this.state)
       }
 
       if (!this.hasAppliedJumpFrame10 && this.animator.anim.currentFrame === 10) {
         this.hasAppliedJumpFrame10 = true
         this.changeState(STATE.IDLE)
+        this.shadow.move(STATE.IDLE)
       }
     }
 
