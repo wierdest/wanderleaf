@@ -13,6 +13,7 @@ export class Body {
     this.getSprite = getSprite
     this._x = 0
     this._y = 0
+    this._positionVector = new Vector2(0, 0)
     this.weight = 1
     this.speed = SPEED
     this.walkSpeed = this.speed
@@ -36,7 +37,9 @@ export class Body {
 
   getPosition () {
     const sprite = this.getSprite()
-    return { x: sprite.x, y: sprite.y }
+    this._positionVector.x = sprite.x
+    this._positionVector.y = sprite.y
+    return this._positionVector
   }
 
   move (dx, dy, isRunning) {
