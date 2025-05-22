@@ -1,5 +1,6 @@
 import { INVALID_ARGUMENT } from './constants/errors.js'
 import { GRAVITY, JUMP_STRENGTH, SPEED } from './constants/physics.js'
+import { Vector2 } from './math/Vector2.js'
 
 export class Body {
   /**
@@ -21,7 +22,7 @@ export class Body {
 
     this.verticalVelocity = 0
     this.gravity = GRAVITY
-    this._groundY = this._y
+    this.groundY = this._y
     this.jumpStrength = JUMP_STRENGTH
     this.hasJumped = false
     this.isJumping = false
@@ -62,7 +63,7 @@ export class Body {
     if (!this.isJumping) {
       this.verticalVelocity = -this.jumpStrength
       this.isJumping = true
-      this._groundY = this._y
+      this.groundY = this._y
     }
   }
 
@@ -72,8 +73,8 @@ export class Body {
       this.verticalVelocity += this.gravity
       sprite.y += this.verticalVelocity
 
-      if (sprite.y >= this._groundY) {
-        this._y = this._groundY
+      if (sprite.y >= this.groundY) {
+        this._y = this.groundY
         sprite.y = this._y
         this.verticalVelocity = 0
         this.hasJumped = true
