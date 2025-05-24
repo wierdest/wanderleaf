@@ -25,9 +25,6 @@ export class MapBuilder {
   }
 
   initBiomeEvaluator (name, biomeEvaluator) {
-    if (!this.biomeEvaluators) {
-      this.biomeEvaluators = new Map()
-    }
     this.biomeEvaluators.set(name, biomeEvaluator)
   }
 
