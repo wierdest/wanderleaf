@@ -110,12 +110,12 @@ Refinando a renderização do mapa para usar o tileset em sua totalidade. 🔨
 
 
 Eventualmente:
-    - refatorar o **Player** para utilizar a FSM
-    - iniciar a estratégia de organização por zIndex, na relação entities x mapa
-    - iniciar a estratégia de detecção de colisão
-    - protótipo da tela inicial.
-    - iniciar o HUD
-    - implementar npcs
-    - expandir interação, incluindo taps, clicks e movimento do mouse.
-    - possibilidade de iniciar a conexão com IA, já que poderemos adicionar mais facilmente um outlet de interação
+- refatorar o **Player** para utilizar a FSM
+- iniciar a estratégia de organização por zIndex, na relação entities x mapa
+- iniciar a estratégia de detecção de colisão
+- protótipo da tela inicial.
+- iniciar o HUD
+- implementar npcs
+- expandir interação, incluindo taps, clicks e movimento do mouse.
+- possibilidade de iniciar a conexão com IA, já que poderemos adicionar mais facilmente um outlet de interação
 
