@@ -1,10 +1,10 @@
 import { TILESIZE } from './constants/dimension.js'
+import { BiomeContext } from './mapbuilding/BiomeContext.js'
+import { LakeEvaluator } from './mapbuilding/evaluators/LakeEvaluator.js'
+import { OceanEvaluator } from './mapbuilding/evaluators/OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
 import { Bounds } from './math/Bounds.js'
 import { Vector2 } from './math/Vector2.js'
-import { OceanEvaluator } from './mapbuilding/OceanEvaluator.js'
-import { LakeEvaluator } from './mapbuilding/LakeEvaluator.js'
-import { BiomeContext } from './mapbuilding/BiomeContext.js'
 
 export class IsometricMapBuilder extends MapBuilder {
   init () {
