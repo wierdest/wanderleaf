@@ -26,7 +26,6 @@ export class LakeEvaluator extends BiomeEvaluator {
 
   evaluate (x, y) {
     if (this._isInBlob(x, y)) {
-      // TODO evaluate for different ocean textures
       return this.biomeContext.textureIds[0]
     }
   }
