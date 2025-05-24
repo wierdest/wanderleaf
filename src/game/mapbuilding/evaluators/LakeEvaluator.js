@@ -1,20 +1,9 @@
 import { createNoise2D } from 'simplex-noise'
-import { INVALID_ARGUMENT } from '../constants/errors.js'
 import { BiomeEvaluator } from './BiomeEvaluator.js'
 
 export class LakeEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
     super(biomeContext)
-
-    if (
-      !biomeContext?.args ||
-            biomeContext.args.length < 2 ||
-            typeof biomeContext.args[0] !== 'number' ||
-            typeof biomeContext.args[1] !== 'number'
-    ) {
-      throw new Error(INVALID_ARGUMENT(this.constructor.name, `context args: ${JSON.stringify(biomeContext?.args)}`))
-    }
-
     this.biomeContext = biomeContext
 
     this.noise2D = createNoise2D()
