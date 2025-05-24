@@ -1,4 +1,3 @@
-import { DEFAULT_LAND_TILE_TEXTURE } from '../constants/assets.js'
 import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED, UNDEFINED } from '../constants/errors.js'
 import { Vector2 } from '../math/Vector2.js'
 
@@ -36,12 +35,12 @@ export class MapBuilder {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildRefinedMap'))
   }
 
-  buildTiles () {
+  buildTiles (defaultTexture) {
     for (let y = -this.heightInTiles; y < this.heightInTiles; y++) {
       const row = []
       for (let x = -this.widthInTiles; x < this.widthInTiles; x++) {
         const tile = { textureId: '', pos: new Vector2(0, 0), size: new Vector2(this.tileWidth, this.tileHeight) }
-        tile.textureId = this._getTileTextureId(x, y) || DEFAULT_LAND_TILE_TEXTURE
+        tile.textureId = this._getTileTextureId(x, y) || defaultTexture
         tile.pos.x = x
         tile.pos.y = y
         row.push(tile)

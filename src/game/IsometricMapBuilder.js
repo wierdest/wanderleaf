@@ -1,3 +1,4 @@
+import { DEFAULT_LAND_TILE_TEXTURE } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
 import { LakeEvaluator } from './mapbuilding/evaluators/LakeEvaluator.js'
@@ -55,7 +56,7 @@ export class IsometricMapBuilder extends MapBuilder {
       {
         label: 'Finalizando tiles...',
         fn: () => {
-          this.tiles = this.buildTiles()
+          this.tiles = this.buildTiles(DEFAULT_LAND_TILE_TEXTURE)
         }
       }
     ]
