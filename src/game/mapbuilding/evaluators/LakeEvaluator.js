@@ -4,7 +4,6 @@ import { BiomeEvaluator } from './BiomeEvaluator.js'
 export class LakeEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
     super(biomeContext)
-    this.biomeContext = biomeContext
 
     this.noise2D = createNoise2D()
     this.cx = this.biomeContext.bounds.getBorder().x

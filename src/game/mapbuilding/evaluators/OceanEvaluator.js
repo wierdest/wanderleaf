@@ -4,7 +4,6 @@ import { BiomeEvaluator } from './BiomeEvaluator.js'
 export class OceanEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
     super(biomeContext)
-    this.biomeContext = biomeContext
     this.noise2D = createNoise2D()
 
     this.minY = this.biomeContext.bounds.getMinY()
@@ -31,16 +30,7 @@ export class OceanEvaluator extends BiomeEvaluator {
   // Then this evaluator shall be used in the refinement process, so we can implement the full
   // step of evaluating tiles => generating texture => switching map texture
   // this will lay the grounds for the rest of the refinement process
-  _isCoast (x, y) {
-    const shallowMargin = 2
 
-    const inTopShallow = y >= this.minY + this.topBand - shallowMargin && y <= this.minY + this.topBand
-    const inBottomShallow = y <= this.maxY - this.bottomBand + shallowMargin && y >= this.maxY - this.bottomBand
-    const inLeftShallow = x >= this.minX + this.leftBand - shallowMargin * 0.2 && x <= this.minX + this.leftBand
-    const inRightShallow = x <= this.maxX - this.rightBand + shallowMargin * 0.2 && x >= this.maxX - this.rightBand
-
-    return inTopShallow || inBottomShallow || inLeftShallow || inRightShallow
-  }
 
   _isWithinBand (x, y) {
     return (

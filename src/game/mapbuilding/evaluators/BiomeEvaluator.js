@@ -9,6 +9,7 @@ export class BiomeEvaluator {
     if (new.target === BiomeEvaluator) {
       throw new Error(IS_ABSTRACT(this.constructor.name))
     }
+    this.biomeContext = context
   }
 
   evaluate () {
