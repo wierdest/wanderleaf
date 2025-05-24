@@ -17,7 +17,7 @@ export class OceanEvaluator extends BiomeEvaluator {
   evaluate (x, y) {
     this._updateBands(x, y)
 
-    if (this._isShallowWater(x, y)) {
+    if (this._isCoast(x, y)) {
       const shallowIndex = 1 + Math.floor(Math.random() * 3)
       return this.biomeContext.textureIds[shallowIndex]
     }
@@ -27,8 +27,12 @@ export class OceanEvaluator extends BiomeEvaluator {
     }
   }
 
-  _isShallowWater (x, y) {
-    const shallowMargin = 1
+  // TODO move this to a coastline evaluator
+  // Then this evaluator shall be used in the refinement process, so we can implement the full
+  // step of evaluating tiles => generating texture => switching map texture
+  // this will lay the grounds for the rest of the refinement process
+  _isCoast (x, y) {
+    const shallowMargin = 2
 
     const inTopShallow = y >= this.minY + this.topBand - shallowMargin && y <= this.minY + this.topBand
     const inBottomShallow = y <= this.maxY - this.bottomBand + shallowMargin && y >= this.maxY - this.bottomBand
