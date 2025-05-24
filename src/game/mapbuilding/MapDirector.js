@@ -14,7 +14,6 @@ export class MapDirector {
 
     this.builder = builder
     this.progressCallback = progressCallback
-    this.tiles = []
   }
 
   async construct () {
