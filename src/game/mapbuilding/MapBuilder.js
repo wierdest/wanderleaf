@@ -15,6 +15,8 @@ export class MapBuilder {
     this.screenHeight = size.y
     this.bounds = undefined
     this.biomeEvaluators = new Map()
+    this.basicMapSteps = []
+    this.refinementSteps = []
     this.tiles = []
   }
 
@@ -27,6 +29,14 @@ export class MapBuilder {
       this.biomeEvaluators = new Map()
     }
     this.biomeEvaluators.set(name, biomeEvaluator)
+  }
+
+  buildBasicMap (progressCallback) {
+    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildBasicMap'))
+  }
+
+  async buildRefinedMap (progressCallback) {
+    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildRefinedMap'))
   }
 
   buildTiles () {
