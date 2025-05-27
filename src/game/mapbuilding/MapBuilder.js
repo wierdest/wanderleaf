@@ -1,4 +1,5 @@
 import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED, UNDEFINED } from '../constants/errors.js'
+import { deepFreeze } from '../helpers/deepFreeze.js'
 import { Vector2 } from '../math/Vector2.js'
 import { Tile } from './Tile.js'
 
@@ -17,6 +18,7 @@ export class MapBuilder {
     this.basicMapBiomeEvaluators = new Map()
     this.refinedMapBiomeEvaluators = new Map()
     this.tiles = []
+    this.frozenTiles = []
   }
 
   init () {
@@ -55,5 +57,40 @@ export class MapBuilder {
       const textureId = evaluator.evaluate(tile)
       if (textureId) return textureId
     }
+  }
+
+  initRefinedBiomeEvaluator (name, biomeEvaluator) {
+    this.refinedMapBiomeEvaluators.set(name, biomeEvaluator)
+  }
+
+  buildRefinedTiles () {
+    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildRefinedTiles'))
+  }
+
+  async refine (refinementEvaluatorName, refinementCallback) {
+    const evaluator = this.refinedMapBiomeEvaluators.get(refinementEvaluatorName)
+    if (!evaluator) {
+      throw new Error(UNDEFINED('biomeEvaluator', `Evaluator "${refinementEvaluatorName}" not found`))
+    }
+
+    // flatten array
+    const flat = this.tiles.flat()
+
+    // filter according to the concrete implementation
+    const filtered = await refinementCallback(flat)
+
+    for (const tile of filtered) {
+      const refined = this._getRefinedTileTextureId(tile, evaluator)
+      tile.textureId = refined || this.textureId
+    }
+  }
+
+  _getRefinedTileTextureId (tile, evaluator) {
+    const textureId = evaluator.evaluate(tile)
+    if (textureId) return textureId
+  }
+
+  _freezeTiles () {
+    return deepFreeze(this.tiles.map(row => row.map(tile => ({ ...tile }))))
   }
 }
