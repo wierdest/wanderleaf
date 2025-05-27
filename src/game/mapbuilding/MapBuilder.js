@@ -63,7 +63,7 @@ export class MapBuilder {
     this.refinedMapBiomeEvaluators.set(name, biomeEvaluator)
   }
 
-  buildRefinedTiles () {
+  async buildRefinedTiles () {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildRefinedTiles'))
   }
 
