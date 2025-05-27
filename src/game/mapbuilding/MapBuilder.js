@@ -1,5 +1,6 @@
 import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED, UNDEFINED } from '../constants/errors.js'
 import { Vector2 } from '../math/Vector2.js'
+import { Tile } from './Tile.js'
 
 export class MapBuilder {
   constructor (size) {
@@ -27,25 +28,25 @@ export class MapBuilder {
     this.biomeEvaluators.set(name, biomeEvaluator)
   }
 
-  buildBasicMap (progressCallback) {
-    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildBasicMap'))
-  }
-
-  async buildRefinedMap (progressCallback) {
-    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildRefinedMap'))
-  }
-
-  buildTiles (defaultTexture) {
+  buildBasicMapTiles (defaultTexture) {
+    let gridY = 0
+    let gridX = 0
     for (let y = -this.heightInTiles; y < this.heightInTiles; y++) {
       const row = []
       for (let x = -this.widthInTiles; x < this.widthInTiles; x++) {
-        const tile = { textureId: '', pos: new Vector2(0, 0), size: new Vector2(this.tileWidth, this.tileHeight) }
-        tile.textureId = this._getTileTextureId(x, y) || defaultTexture
-        tile.pos.x = x
-        tile.pos.y = y
+        const tile = new Tile(
+          '',
+          new Vector2(x, y),
+          new Vector2(this.tileWidth, this.tileHeight),
+          new Vector2(gridX++, gridY)
+        )
+        const textureId = this._getBasicTileTextureId(tile) || defaultTexture
+        tile.textureId = textureId
         row.push(tile)
       }
       this.tiles.push(row)
+      gridX = 0
+      gridY++
     }
     return this.tiles
   }
