@@ -63,13 +63,12 @@ export class IsometricMapBuilder extends MapBuilder {
     )
   }
 
-  async buildRefinedMap (progressCallback) {
-    const totalSteps = this.refinementSteps.length
-    for (let i = 0; i < totalSteps; i++) {
-      const step = this.refinementSteps[i]
-      const progress = 0.1 + (0.2 * (i + 1)) / (totalSteps + 1)
-      progressCallback(step.label, progress)
-      await step.fn()
+  async buildRefinedTiles (refinementEvaluatorName) {
+    switch (refinementEvaluatorName) {
+      case 'coastline':
+        return await this.refine('coastline',
+          (flatTiles) => flatTiles.filter((t) => t.textureId === 'tile101')
+        )
     }
   }
 
