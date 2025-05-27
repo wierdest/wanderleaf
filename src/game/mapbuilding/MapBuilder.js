@@ -14,9 +14,8 @@ export class MapBuilder {
     this.screenWidth = size.x
     this.screenHeight = size.y
     this.bounds = undefined
-    this.biomeEvaluators = new Map()
-    this.basicMapSteps = []
-    this.refinementSteps = []
+    this.basicMapBiomeEvaluators = new Map()
+    this.refinedMapBiomeEvaluators = new Map()
     this.tiles = []
   }
 
@@ -24,8 +23,8 @@ export class MapBuilder {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'init'))
   }
 
-  initBiomeEvaluator (name, biomeEvaluator) {
-    this.biomeEvaluators.set(name, biomeEvaluator)
+  initBasicMapBiomeEvaluator (name, biomeEvaluator) {
+    this.basicMapBiomeEvaluators.set(name, biomeEvaluator)
   }
 
   buildBasicMapTiles (defaultTexture) {
@@ -51,12 +50,9 @@ export class MapBuilder {
     return this.tiles
   }
 
-  _getTileTextureId (x, y) {
-    if (this.biomeEvaluators?.size === 0) {
-      throw new Error(UNDEFINED('biomeEvaluators', 'Make sure you have implemented and called at least one initBiomeEvaluator'))
-    }
-    for (const evaluator of this.biomeEvaluators.values()) {
-      const textureId = evaluator.evaluate(x, y)
+  _getBasicTileTextureId (tile) {
+    for (const evaluator of this.basicMapBiomeEvaluators.values()) {
+      const textureId = evaluator.evaluate(tile)
       if (textureId) return textureId
     }
   }
