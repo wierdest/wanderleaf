@@ -22,12 +22,6 @@ export class OceanEvaluator extends BiomeEvaluator {
     }
   }
 
-  // TODO move this to a coastline evaluator
-  // Then this evaluator shall be used in the refinement process, so we can implement the full
-  // step of evaluating tiles => generating texture => switching map texture
-  // this will lay the grounds for the rest of the refinement process
-
-
   _isWithinBand (x, y) {
     return (
       ((y >= this.minY) && (y <= (this.minY + this.topBand))) ||
