@@ -1,5 +1,6 @@
 import { DEFAULT_LAND_TILE_TEXTURE } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
+import { INVALID_ARGUMENT, UNDEFINED } from './constants/errors.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
 import { CoastlineEvaluator } from './mapbuilding/evaluators/CoastlineEvaluator.js'
 import { LakeEvaluator } from './mapbuilding/evaluators/LakeEvaluator.js'
@@ -69,6 +70,12 @@ export class IsometricMapBuilder extends MapBuilder {
         return await this.refine('coastline',
           (flatTiles) => flatTiles.filter((t) => t.textureId === 'tile101')
         )
+      case 'highland':
+        throw new Error(UNDEFINED('HighlandEvaluator', 'Ainda não implementamos!'))
+      case 'vegetation':
+        throw new Error(UNDEFINED('VegetationEvaluator', 'Ainda não implementamos!'))
+      default:
+        throw new Error(INVALID_ARGUMENT(this.constructor.name, 'refinementEvaluator'))
     }
   }
 }
