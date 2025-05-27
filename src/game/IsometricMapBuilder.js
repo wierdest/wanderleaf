@@ -71,34 +71,4 @@ export class IsometricMapBuilder extends MapBuilder {
         )
     }
   }
-
-  async applyCoastline () {
-    // TODO really implement this
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('Aplicou ajuste adicionando costa')
-        resolve()
-      }, 1000)
-    })
-  }
-
-  async applyHighlands () {
-    // TODO really implement this
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('Imagine que terminou de aplicar ajuste adicionando planaltos e aŕeas elevadas')
-        resolve()
-      }, 2000)
-    })
-  }
-
-  async applyVegetation () {
-    // TODO really implement this
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('Imagine que terminou de aplicar ajuste adicionando vegetação')
-        resolve()
-      }, 3000)
-    })
-  }
 }
