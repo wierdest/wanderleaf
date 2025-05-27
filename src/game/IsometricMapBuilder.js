@@ -1,6 +1,7 @@
 import { DEFAULT_LAND_TILE_TEXTURE } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
+import { CoastlineEvaluator } from './mapbuilding/evaluators/CoastlineEvaluator.js'
 import { LakeEvaluator } from './mapbuilding/evaluators/LakeEvaluator.js'
 import { OceanEvaluator } from './mapbuilding/evaluators/OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
@@ -22,68 +23,44 @@ export class IsometricMapBuilder extends MapBuilder {
       new Vector2(-this.heightInTiles, this.heightInTiles)
     )
 
-    this.basicMapSteps = [
-      {
-        label: 'Construindo oceano...',
-        fn: () => {
-          this.initBiomeEvaluator(
-            'ocean',
-            new OceanEvaluator(
-              new BiomeContext(
-                this.bounds,
-                ['tile101', ...Array.from({ length: 3 }, (_, i) => `tile${82 + i}`)]
-              )
-            )
-          )
-        }
-      },
-      {
-        label: 'Construindo lago...',
-        fn: () => {
-          this.initBiomeEvaluator(
-            'lake',
-            new LakeEvaluator(
-              new BiomeContext(
-                new Bounds(new Vector2(-18, -14)),
-                ['tile104'],
-                18,
-                1
-              )
-            )
-          )
-        }
-      },
-      {
-        label: 'Finalizando tiles...',
-        fn: () => {
-          this.tiles = this.buildTiles(DEFAULT_LAND_TILE_TEXTURE)
-        }
-      }
-    ]
+    this.initBasicMapBiomeEvaluator(
+      'ocean',
+      new OceanEvaluator(
+        new BiomeContext(
+          this.bounds,
+          ['tile101']
+        )
+      )
+    )
 
-    this.refinementSteps = [
-      {
-        label: 'Aplicando litoral...',
-        fn: this.applyCoastline.bind(this)
-      },
-      {
-        label: 'Aplicando terras altas...',
-        fn: this.applyHighlands.bind(this)
-      },
-      {
-        label: 'Aplicando vegetação...',
-        fn: this.applyVegetation.bind(this)
-      }
-    ]
-  }
+    this.initBasicMapBiomeEvaluator(
+      'lake',
+      new LakeEvaluator(
+        new BiomeContext(
+          new Bounds(new Vector2(-18, -14)),
+          ['tile104'],
+          18,
+          1
+        )
+      )
+    )
 
-  buildBasicMap (progressCallback) {
-    const totalSteps = this.basicMapSteps.length
-    for (let i = 0; i < totalSteps; i++) {
-      this.basicMapSteps[i].fn()
-      const progress = (i + 1) / (totalSteps + 1)
-      progressCallback(this.basicMapSteps[i].label, progress)
-    }
+    this.tiles = this.buildBasicMapTiles(DEFAULT_LAND_TILE_TEXTURE)
+
+    // freeze a copy of the basic map tiles to pass to evaluators
+    this.frozenTiles = this._freezeTiles()
+
+    this.initRefinedBiomeEvaluator(
+      'coastline',
+      new CoastlineEvaluator(
+        new BiomeContext(
+          // TODO these bounds should be how broad the coastline should reach
+          new Bounds(new Vector2(-2, 2), new Vector2(-2, 2)),
+          Array.from({ length: 3 }, (_, i) => `tile${82 + i}`),
+          ...this.frozenTiles
+        )
+      )
+    )
   }
 
   async buildRefinedMap (progressCallback) {
