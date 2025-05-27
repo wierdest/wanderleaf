@@ -12,7 +12,8 @@ export class LakeEvaluator extends BiomeEvaluator {
     this.strength = this.biomeContext.args[1]
   }
 
-  evaluate (x, y) {
+  evaluate (tile) {
+    const { x, y } = tile.pos
     if (this._isInBlob(x, y)) {
       return this.biomeContext.textureIds[0]
     }

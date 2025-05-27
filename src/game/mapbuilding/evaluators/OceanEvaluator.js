@@ -13,7 +13,8 @@ export class OceanEvaluator extends BiomeEvaluator {
     this.maxX = this.biomeContext.bounds.getMaxX()
   }
 
-  evaluate (x, y) {
+  evaluate (tile) {
+    const { x, y } = tile.pos
     this._updateBands(x, y)
 
     if (this._isCoast(x, y)) {
