@@ -17,11 +17,6 @@ export class OceanEvaluator extends BiomeEvaluator {
     const { x, y } = tile.pos
     this._updateBands(x, y)
 
-    if (this._isCoast(x, y)) {
-      const shallowIndex = 1 + Math.floor(Math.random() * 3)
-      return this.biomeContext.textureIds[shallowIndex]
-    }
-
     if (this._isWithinBand(x, y)) {
       return this.biomeContext.textureIds[0]
     }
