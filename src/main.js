@@ -69,17 +69,20 @@ async function setup () {
 
   const mapBasicTextureLoader = new MapTextureLoader(app.renderer, tiles)
 
-  const mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
+  let mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
 
   const map = new GameMap(mapContainer, mapRenderTexture, screenSize)
+  // we control the refinement steps with the director
+  await mapDirector.refine('coastline').then(async (tiles) => {
+    // here we will re-render the map texture & apply it!
+    mapBasicTextureLoader.tiles = tiles
+    mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
+    map.updateTexture(mapRenderTexture)
+  })
 
   // Map controls for scroll
   const mapArrowControls = new ArrowControls(map)
   mapArrowControls.attach()
-
-  mapDirector.refine().then(() => {
-    console.log('Finished refining map!!')
-  })
 
   // Loads a  character
   // TODO defaultDirection should be a property of the entity and not of the state
