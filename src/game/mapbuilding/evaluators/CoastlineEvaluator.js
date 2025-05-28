@@ -16,7 +16,7 @@ export class CoastlineEvaluator extends BiomeEvaluator {
 
   evaluate (tile) {
     if (this._isAdjacentToLand(tile)) {
-      return this.biomeContext.textureIds[0]
+      return this.biomeContext.textureIds[ Math.random() * this.biomeContext.textureIds.length | 0]
     }
   }
 

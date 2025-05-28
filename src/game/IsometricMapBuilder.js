@@ -55,9 +55,8 @@ export class IsometricMapBuilder extends MapBuilder {
       'coastline',
       new CoastlineEvaluator(
         new BiomeContext(
-          // TODO these bounds should be how broad the coastline should reach
           new Bounds(new Vector2(-2, 2), new Vector2(-2, 2)),
-          Array.from({ length: 3 }, (_, i) => `tile${82 + i}`),
+          Array.from({ length: 17 }, (_, i) => `tile${69 + i}`),
           ...this.frozenTiles
         )
       )
