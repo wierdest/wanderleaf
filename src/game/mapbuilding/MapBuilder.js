@@ -81,7 +81,7 @@ export class MapBuilder {
 
     for (const tile of filtered) {
       const refined = this._getRefinedTileTextureId(tile, evaluator)
-      tile.textureId = refined || this.textureId
+      tile.textureId = refined || tile.textureId
     }
   }
 
