@@ -1,5 +1,5 @@
-import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/errors.js'
-import { BiomeContext } from './BiomeContext.js'
+import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED } from '../../constants/errors.js'
+import { BiomeContext } from '../BiomeContext.js'
 
 export class BiomeEvaluator {
   constructor (context) {
@@ -9,9 +9,10 @@ export class BiomeEvaluator {
     if (new.target === BiomeEvaluator) {
       throw new Error(IS_ABSTRACT(this.constructor.name))
     }
+    this.biomeContext = context
   }
 
-  evaluate () {
+  evaluate (tile) {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'evaluate'))
   }
 }

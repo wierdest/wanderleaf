@@ -14,14 +14,13 @@ export class MapDirector {
 
     this.builder = builder
     this.progressCallback = progressCallback
-    this.tiles = []
   }
 
   async construct () {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'construct'))
   }
 
-  async refine () {
+  async refine (...args) {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'refine'))
   }
 

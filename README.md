@@ -88,38 +88,34 @@ Delegamos a responsabilidade de registrar o progresso do processo a um **BaseLoa
 
 **LoadingBar** encapsula labels de texto. Utilizamos `loadingBar.update(message, progress)` como callback de progresso para os loaders, para ter uma noção real da alocação de recursos.
 
-Seguindo com o projeto, implementaremos os outros 6 estados do jogador 🔨
+Implementamos os seguintes estados para o jogador
+
+- IDLE 😴
+- WALK 🚶 (setas)
+- RUN  🏃 (shift esquerdo enquanto anda)
+- JUMP 🦘 (quando parado, barra de espaço ativa o pulo)
+- RUNNING JUMP 🤾‍♀️ (quando correndo, barra de espaço faz o pulo)
+- MELEE ATTACK 🥊 (dá um soco com a letra E)
+- BLOCK 🛡️ (se defende, com a letra Q)
+
+Fizemos alterações no character-atlas generator e criamos os **ActionControls**, para controlar os estados ativados pelas constantes `ACTION_KEYS`. 
+
+Fizemos a implementações no **Player** e adicionamos melhores instruções na tela do protótipo.
+
+Implementamos uma sombra simples, **EntityShadow** utilizando `PIXI.Graphics`.
+
+Em andamento
+
+Refinando a renderização do mapa para usar o tileset em sua totalidade. 🔨
 
 
-A partir daí teremos uma estrutura propícia ao encapsulamento da lógica inicial do jogo, tendo duas opções de caminhos:
-
-    - Criaremos o protótipo da tela inicial.
-    - Refinaremos o carregamento do mapa e da nossa única entidade (o jogador) 🔨
-
-As ramificações desses caminhos:
-
-    - A criação da tela inicial leva a...
-        - criação do conceito de Scene (elementos de jogo + ui)
-        - criação de um SceneManager para administrar as diferentes cenas (cenas de loading, cena principal, cena de settings)
-        - expandir interação, incluindo taps, clicks e movimento do mouse.
-        - possibilidade de iniciar a conexão com IA, já que poderemos adicionar mais facilmente um outlet de interação
-    
-    - O refinamento do carregamento de elementos de jogo possibilita...
-        - implementar os outros estados do jogador 🔨
-            - IDLE ✅
-            - WALK ✅ (setas)
-            - RUN  ✅ (shift esquerdo enquanto anda)
-            - JUMP ✅ (quando parado, barra de espaço ativa o pulo)
-            - RUNNING JUMP ✅ (quando correndo, barra de espaço faz o pulo)
-            - MELEE ATTACK ✅ (dá um soco com a letra E)
-            - BLOCK ✅ (se defende, com a letra Q)
-        
-        - implementar sombra no jogador 🔨
-
-        - refatorar o **Player** para utilizar a FSM
-        - utilizar o tileset em sua totalidade
-        - iniciar a estratégia de organização por zIndex, na relação entities x mapa
-        - iniciar a estratégia de detecção de colisão
-        - iniciar o HUD
-        - implementar npcs
+Eventualmente:
+- refatorar o **Player** para utilizar a FSM
+- iniciar a estratégia de organização por zIndex, na relação entities x mapa
+- iniciar a estratégia de detecção de colisão
+- protótipo da tela inicial.
+- iniciar o HUD
+- implementar npcs
+- expandir interação, incluindo taps, clicks e movimento do mouse.
+- possibilidade de iniciar a conexão com IA, já que poderemos adicionar mais facilmente um outlet de interação
 
