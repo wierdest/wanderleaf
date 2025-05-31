@@ -1,5 +1,6 @@
 import { createNoise2D } from 'simplex-noise'
 import { BiomeEvaluator } from './BiomeEvaluator.js'
+import { LAKE_WATER } from '../../constants/assets.js'
 
 export class LakeEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
@@ -15,7 +16,7 @@ export class LakeEvaluator extends BiomeEvaluator {
   evaluate (tile) {
     const { x, y } = tile.pos
     if (this._isInBlob(x, y)) {
-      return this.biomeContext.textureIds[0]
+      return LAKE_WATER
     }
   }
 
