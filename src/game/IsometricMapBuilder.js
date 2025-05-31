@@ -1,8 +1,8 @@
-import { DEFAULT_LAND_TILE_TEXTURE } from './constants/assets.js'
+import { DEFAULT_LAND_TILE_TEXTURE, OCEAN_WATER } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
 import { INVALID_ARGUMENT, UNDEFINED } from './constants/errors.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
-import { CoastlineEvaluator } from './mapbuilding/evaluators/CoastlineEvaluator.js'
+import { NWCoastEvaluator } from './mapbuilding/evaluators/NWCoastEvaluator.js'
 import { LakeEvaluator } from './mapbuilding/evaluators/LakeEvaluator.js'
 import { OceanEvaluator } from './mapbuilding/evaluators/OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
@@ -28,8 +28,7 @@ export class IsometricMapBuilder extends MapBuilder {
       'ocean',
       new OceanEvaluator(
         new BiomeContext(
-          this.bounds,
-          ['tile101']
+          this.bounds
         )
       )
     )
@@ -39,7 +38,6 @@ export class IsometricMapBuilder extends MapBuilder {
       new LakeEvaluator(
         new BiomeContext(
           new Bounds(new Vector2(-18, -14)),
-          ['tile104'],
           18,
           1
         )
@@ -47,16 +45,17 @@ export class IsometricMapBuilder extends MapBuilder {
     )
 
     this.tiles = this.buildBasicMapTiles(DEFAULT_LAND_TILE_TEXTURE)
+    this.primeMeridian = this.tiles[0].length / 2
+    this.equator = this.tiles.length / 2
 
     // freeze a copy of the basic map tiles to pass to evaluators
     this.frozenTiles = this._freezeTiles()
 
     this.initRefinedBiomeEvaluator(
-      'coastline',
-      new CoastlineEvaluator(
+      'nw-coast',
+      new NWCoastEvaluator(
         new BiomeContext(
-          new Bounds(new Vector2(-2, 2), new Vector2(-2, 2)),
-          Array.from({ length: 17 }, (_, i) => `tile${69 + i}`),
+          undefined,
           ...this.frozenTiles
         )
       )
@@ -65,10 +64,8 @@ export class IsometricMapBuilder extends MapBuilder {
 
   async buildRefinedTiles (refinementEvaluatorName) {
     switch (refinementEvaluatorName) {
-      case 'coastline':
-        return await this.refine('coastline',
-          (flatTiles) => flatTiles.filter((t) => t.textureId === 'tile101')
-        )
+      case 'nw-coast':
+        return await this.refine('nw-coast', (flatTiles) => this._filterNorthwestOcean(flatTiles))
       case 'highland':
         throw new Error(UNDEFINED('HighlandEvaluator', 'Ainda não implementamos!'))
       case 'vegetation':
@@ -76,5 +73,21 @@ export class IsometricMapBuilder extends MapBuilder {
       default:
         throw new Error(INVALID_ARGUMENT(this.constructor.name, 'refinementEvaluator'))
     }
+  }
+
+  _filterNorthwestOcean (flatTiles) {
+    return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x < this.primeMeridian / 4 && t.grid.y < this.equator - 1)
+  }
+
+  _isNortheastern (x, y) {
+    return x >= this.primeMeridian && y < this.equator
+  }
+
+  _isSoutheastern (x, y) {
+    return x >= this.primeMeridian && y >= this.equator
+  }
+
+  _isSouthwestern (x, y) {
+    return x < this.primeMeridian && y >= this.equator
   }
 }
