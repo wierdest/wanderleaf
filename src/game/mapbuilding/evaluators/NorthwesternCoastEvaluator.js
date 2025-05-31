@@ -1,7 +1,7 @@
 import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, WATER_SPARKLES } from '../../constants/assets.js'
 import { BiomeEvaluator } from './BiomeEvaluator.js'
 
-export class NWCoastEvaluator extends BiomeEvaluator {
+export class NorthwesternCoastEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
     super(biomeContext)
     this.allTiles = this.biomeContext.args

@@ -2,7 +2,7 @@ import { DEFAULT_LAND_TILE_TEXTURE, OCEAN_WATER } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
 import { INVALID_ARGUMENT, UNDEFINED } from './constants/errors.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
-import { NWCoastEvaluator } from './mapbuilding/evaluators/NWCoastEvaluator.js'
+import { NorthwesternCoastEvaluator } from './mapbuilding/evaluators/NorthwesternCoastEvaluator.js'
 import { LakeEvaluator } from './mapbuilding/evaluators/LakeEvaluator.js'
 import { OceanEvaluator } from './mapbuilding/evaluators/OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
@@ -52,8 +52,8 @@ export class IsometricMapBuilder extends MapBuilder {
     this.frozenTiles = this._freezeTiles()
 
     this.initRefinedBiomeEvaluator(
-      'nw-coast',
-      new NWCoastEvaluator(
+      'northwestern-coast',
+      new NorthwesternCoastEvaluator(
         new BiomeContext(
           undefined,
           ...this.frozenTiles
@@ -76,7 +76,7 @@ export class IsometricMapBuilder extends MapBuilder {
   }
 
   _filterNorthwestOcean (flatTiles) {
-    return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x < this.primeMeridian / 4 && t.grid.y < this.equator - 1)
+    return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x < this.primeMeridian / 4 && t.grid.y < this.equator)
   }
 
   _isNortheastern (x, y) {
