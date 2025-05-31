@@ -1,38 +1,43 @@
-import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, WATER_SPARKLES } from '../../constants/assets.js'
-import { BiomeEvaluator } from './BiomeEvaluator.js'
+import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, WATER_SPARKLES } from './constants/assets.js'
+import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
 
-export class NWCoastEvaluator extends BiomeEvaluator {
+export class SoftCoastlineEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
     super(biomeContext)
-    this.allTiles = this.biomeContext.args
-    this.height = this.allTiles.length
-    this.width = this.allTiles[0].length
+    this.mapTiles = this.biomeContext.args[0]
+    this.height = this.mapTiles.length
+    this.width = this.mapTiles[0].length
+  }
+
+  setOptions (options) {
+    this._xDirMultiplier = options.xDir || 1
+    this._yDir = options.yDir || 0
   }
 
   evaluate (tile) {
     const { x, y } = tile.grid
 
-    if (this._isNeighbour(x, y, 1, 0)) {
+    if (this._isNeighbour(x, y, 1 * this._xDirMultiplier, 0)) {
       return this._chooseSlab()
     }
 
-    if (this._isNeighbour(x, y, 2, 0)) {
+    if (this._isNeighbour(x, y, 2 * this._xDirMultiplier, 0)) {
       return this._chooseRuggedSlabOrRock()
     }
 
-    if (this._isNeighbour(x, y, 3, 0)) {
+    if (this._isNeighbour(x, y, 3 * this._xDirMultiplier, 0)) {
       return this._chooseSparkleOrWave()
     }
 
-    if (this._isNeighbour(x, y, 4, 0)) {
+    if (this._isNeighbour(x, y, 4 * this._xDirMultiplier, 0)) {
       return Math.random() < 0.03 ? this._chooseSubmergedRock() : Math.random() < 0.08 ? this._chooseSparkle() : tile.textureId
     }
 
-    if (this._isNeighbour(x, y, 5, 0)) {
+    if (this._isNeighbour(x, y, 5 * this._xDirMultiplier, 0)) {
       return Math.random() < 0.03 ? this._chooseSubmergedRockSmall() : Math.random() < 0.08 ? this._chooseSparkle() : tile.textureId
     }
 
-    if (this._isNeighbour(x, y, 7, 1)) {
+    if (this._isNeighbour(x, y, 7 * this._xDirMultiplier, this._yDir)) {
       return Math.random() < 0.4 ? this._chooseSparkleOrWave() : tile.textureId
     }
   }
@@ -41,7 +46,7 @@ export class NWCoastEvaluator extends BiomeEvaluator {
     const nx = x + dx
     const ny = y + dy
     if (ny < 0 || ny >= this.height || nx < 0 || nx >= this.width) return false
-    const neighbor = this.allTiles[ny][nx]
+    const neighbor = this.mapTiles[ny][nx]
     return neighbor?.textureId === DEFAULT_LAND_TILE_TEXTURE
   }
 

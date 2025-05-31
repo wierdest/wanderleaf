@@ -67,11 +67,13 @@ export class MapBuilder {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildRefinedTiles'))
   }
 
-  async refine (refinementEvaluatorName, refinementCallback) {
+  async refine (refinementEvaluatorName, refinementCallback, evaluatorOptions) {
     const evaluator = this.refinedMapBiomeEvaluators.get(refinementEvaluatorName)
     if (!evaluator) {
       throw new Error(UNDEFINED('biomeEvaluator', `Evaluator "${refinementEvaluatorName}" not found`))
     }
+
+    evaluator.setOptions(evaluatorOptions)
 
     // flatten array
     const flat = this.tiles.flat()
@@ -83,6 +85,8 @@ export class MapBuilder {
       const refined = this._getRefinedTileTextureId(tile, evaluator)
       tile.textureId = refined || tile.textureId
     }
+
+    evaluator.clearOptions()
   }
 
   _getRefinedTileTextureId (tile, evaluator) {
