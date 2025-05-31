@@ -1,5 +1,6 @@
 import { createNoise2D } from 'simplex-noise'
 import { BiomeEvaluator } from './BiomeEvaluator.js'
+import { OCEAN_WATER } from '../../constants/assets.js'
 
 export class OceanEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
@@ -18,7 +19,7 @@ export class OceanEvaluator extends BiomeEvaluator {
     this._updateBands(x, y)
 
     if (this._isWithinBand(x, y)) {
-      return this.biomeContext.textureIds[0]
+      return OCEAN_WATER
     }
   }
 
