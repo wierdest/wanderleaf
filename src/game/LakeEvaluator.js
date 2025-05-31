@@ -1,6 +1,6 @@
 import { createNoise2D } from 'simplex-noise'
-import { BiomeEvaluator } from './BiomeEvaluator.js'
-import { LAKE_WATER } from '../../constants/assets.js'
+import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
+import { LAKE_WATER } from './constants/assets.js'
 
 export class LakeEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
