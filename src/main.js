@@ -92,21 +92,21 @@ async function setup () {
   mapArrowControls.attach()
 
   // Loads a  character
-  // TODO defaultDirection should be a property of the entity and not of the state
   const entities = [
     {
       entity: {
         name: 'character',
-        container: playerContainer
+        container: playerContainer,
+        defaultDirection: DIRECTION.DOWN
       },
       states: [
-        { name: STATE.IDLE, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.WALK, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.RUN, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.JUMP, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.RUNNINGJUMP, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.MELEE, defaultDirection: DIRECTION.DOWN },
-        { name: STATE.BLOCK, defaultDirection: DIRECTION.DOWN, noLoop: true }
+        { name: STATE.IDLE },
+        { name: STATE.WALK },
+        { name: STATE.RUN },
+        { name: STATE.JUMP },
+        { name: STATE.RUNNINGJUMP },
+        { name: STATE.MELEE },
+        { name: STATE.BLOCK, noLoop: true }
       ]
     }
   ]
