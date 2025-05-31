@@ -5,5 +5,12 @@
     "eslint.alwaysShowStatus": true,
     "eslint.lintTask.enable": true,
     "eslint.run": "onSave",
+    "javascript.preferences.importModuleSpecifierEnding": "js",
+    "javascript.format.semicolons": "remove",
+    "javascript.referencesCodeLens.enabled": true,
+    "javascript.referencesCodeLens.showOnAllFunctions": true,
+    "javascript.preferences.quoteStyle": "single",
+    "javascript.preferences.importModuleSpecifier": "relative",
+    "javascript.suggest.includeCompletionsForImportStatements": true,
 
 }

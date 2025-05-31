@@ -59,4 +59,8 @@ export class GameMap extends Controllable {
   setPlayer (player) {
     this._player = player
   }
+
+  updateTexture (newTexture) {
+    this.tilingSprite.texture = newTexture
+  }
 }

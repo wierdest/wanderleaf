@@ -20,7 +20,7 @@ export class MapDirector {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'construct'))
   }
 
-  async refine () {
+  async refine (...args) {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'refine'))
   }
 

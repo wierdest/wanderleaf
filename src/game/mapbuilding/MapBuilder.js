@@ -1,6 +1,7 @@
-import { DEFAULT_LAND_TILE_TEXTURE } from '../constants/assets.js'
 import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED, UNDEFINED } from '../constants/errors.js'
+import { deepFreeze } from '../helpers/deepFreeze.js'
 import { Vector2 } from '../math/Vector2.js'
+import { Tile } from './Tile.js'
 
 export class MapBuilder {
   constructor (size) {
@@ -14,50 +15,82 @@ export class MapBuilder {
     this.screenWidth = size.x
     this.screenHeight = size.y
     this.bounds = undefined
-    this.biomeEvaluators = new Map()
-    this.basicMapSteps = []
-    this.refinementSteps = []
+    this.basicMapBiomeEvaluators = new Map()
+    this.refinedMapBiomeEvaluators = new Map()
     this.tiles = []
+    this.frozenTiles = []
   }
 
   init () {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'init'))
   }
 
-  initBiomeEvaluator (name, biomeEvaluator) {
-    this.biomeEvaluators.set(name, biomeEvaluator)
+  initBasicMapBiomeEvaluator (name, biomeEvaluator) {
+    this.basicMapBiomeEvaluators.set(name, biomeEvaluator)
   }
 
-  buildBasicMap (progressCallback) {
-    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildBasicMap'))
-  }
-
-  async buildRefinedMap (progressCallback) {
-    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildRefinedMap'))
-  }
-
-  buildTiles () {
+  buildBasicMapTiles (defaultTexture) {
+    let gridY = 0
+    let gridX = 0
     for (let y = -this.heightInTiles; y < this.heightInTiles; y++) {
       const row = []
       for (let x = -this.widthInTiles; x < this.widthInTiles; x++) {
-        const tile = { textureId: '', pos: new Vector2(0, 0), size: new Vector2(this.tileWidth, this.tileHeight) }
-        tile.textureId = this._getTileTextureId(x, y) || DEFAULT_LAND_TILE_TEXTURE
-        tile.pos.x = x
-        tile.pos.y = y
+        const tile = new Tile(
+          '',
+          new Vector2(x, y),
+          new Vector2(this.tileWidth, this.tileHeight),
+          new Vector2(gridX++, gridY)
+        )
+        const textureId = this._getBasicTileTextureId(tile) || defaultTexture
+        tile.textureId = textureId
         row.push(tile)
       }
       this.tiles.push(row)
+      gridX = 0
+      gridY++
     }
     return this.tiles
   }
 
-  _getTileTextureId (x, y) {
-    if (this.biomeEvaluators?.size === 0) {
-      throw new Error(UNDEFINED('biomeEvaluators', 'Make sure you have implemented and called at least one initBiomeEvaluator'))
-    }
-    for (const evaluator of this.biomeEvaluators.values()) {
-      const textureId = evaluator.evaluate(x, y)
+  _getBasicTileTextureId (tile) {
+    for (const evaluator of this.basicMapBiomeEvaluators.values()) {
+      const textureId = evaluator.evaluate(tile)
       if (textureId) return textureId
     }
+  }
+
+  initRefinedBiomeEvaluator (name, biomeEvaluator) {
+    this.refinedMapBiomeEvaluators.set(name, biomeEvaluator)
+  }
+
+  async buildRefinedTiles () {
+    throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'buildRefinedTiles'))
+  }
+
+  async refine (refinementEvaluatorName, refinementCallback) {
+    const evaluator = this.refinedMapBiomeEvaluators.get(refinementEvaluatorName)
+    if (!evaluator) {
+      throw new Error(UNDEFINED('biomeEvaluator', `Evaluator "${refinementEvaluatorName}" not found`))
+    }
+
+    // flatten array
+    const flat = this.tiles.flat()
+
+    // filter according to the concrete implementation
+    const filtered = await refinementCallback(flat)
+
+    for (const tile of filtered) {
+      const refined = this._getRefinedTileTextureId(tile, evaluator)
+      tile.textureId = refined || tile.textureId
+    }
+  }
+
+  _getRefinedTileTextureId (tile, evaluator) {
+    const textureId = evaluator.evaluate(tile)
+    if (textureId) return textureId
+  }
+
+  _freezeTiles () {
+    return deepFreeze(this.tiles.map(row => row.map(tile => ({ ...tile }))))
   }
 }

@@ -7,16 +7,14 @@ export class IsometricMapDirector extends MapDirector {
 
     this.builder.init()
 
-    this.builder.buildBasicMap(this.updateProgress)
-
     this.updateProgress('Construiu mapa básico!', 0.95)
 
     return this.builder.tiles
   }
 
-  async refine () {
-    await this.builder.buildRefinedMap(this.updateProgress)
-
-    this.updateProgress('Refinamento do mapa concluído!', 1)
+  async refine (refinementEvaluatorName) {
+    await this.builder.buildRefinedTiles(refinementEvaluatorName)
+    this.updateProgress(`Estágio de refinamento concluído: ${refinementEvaluatorName}`, 1)
+    return this.builder.tiles
   }
 }

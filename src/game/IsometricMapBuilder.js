@@ -1,10 +1,13 @@
+import { DEFAULT_LAND_TILE_TEXTURE, OCEAN_WATER } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
+import { INVALID_ARGUMENT, UNDEFINED } from './constants/errors.js'
+import { BiomeContext } from './mapbuilding/BiomeContext.js'
+import { NWCoastEvaluator } from './mapbuilding/evaluators/NWCoastEvaluator.js'
+import { LakeEvaluator } from './mapbuilding/evaluators/LakeEvaluator.js'
+import { OceanEvaluator } from './mapbuilding/evaluators/OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
 import { Bounds } from './math/Bounds.js'
 import { Vector2 } from './math/Vector2.js'
-import { OceanEvaluator } from './mapbuilding/OceanEvaluator.js'
-import { LakeEvaluator } from './mapbuilding/LakeEvaluator.js'
-import { BiomeContext } from './mapbuilding/BiomeContext.js'
 
 export class IsometricMapBuilder extends MapBuilder {
   init () {
@@ -21,107 +24,70 @@ export class IsometricMapBuilder extends MapBuilder {
       new Vector2(-this.heightInTiles, this.heightInTiles)
     )
 
-    this.basicMapSteps = [
-      {
-        label: 'Construindo oceano...',
-        fn: () => {
-          this.initBiomeEvaluator(
-            'ocean',
-            new OceanEvaluator(
-              new BiomeContext(
-                this.bounds,
-                ['tile101', ...Array.from({ length: 3 }, (_, i) => `tile${82 + i}`)]
-              )
-            )
-          )
-        }
-      },
-      {
-        label: 'Construindo lago...',
-        fn: () => {
-          this.initBiomeEvaluator(
-            'lake',
-            new LakeEvaluator(
-              new BiomeContext(
-                new Bounds(new Vector2(-18, -14)),
-                ['tile104'],
-                18,
-                1
-              )
-            )
-          )
-        }
-      },
-      {
-        label: 'Finalizando tiles...',
-        fn: () => {
-          this.tiles = this.buildTiles()
-        }
-      }
-    ]
+    this.initBasicMapBiomeEvaluator(
+      'ocean',
+      new OceanEvaluator(
+        new BiomeContext(
+          this.bounds
+        )
+      )
+    )
 
-    this.refinementSteps = [
-      {
-        label: 'Aplicando litoral...',
-        fn: this.applyCoastline.bind(this)
-      },
-      {
-        label: 'Aplicando terras altas...',
-        fn: this.applyHighlands.bind(this)
-      },
-      {
-        label: 'Aplicando vegetação...',
-        fn: this.applyVegetation.bind(this)
-      }
-    ]
+    this.initBasicMapBiomeEvaluator(
+      'lake',
+      new LakeEvaluator(
+        new BiomeContext(
+          new Bounds(new Vector2(-18, -14)),
+          18,
+          1
+        )
+      )
+    )
+
+    this.tiles = this.buildBasicMapTiles(DEFAULT_LAND_TILE_TEXTURE)
+    this.primeMeridian = this.tiles[0].length / 2
+    this.equator = this.tiles.length / 2
+
+    // freeze a copy of the basic map tiles to pass to evaluators
+    this.frozenTiles = this._freezeTiles()
+
+    this.initRefinedBiomeEvaluator(
+      'nw-coast',
+      new NWCoastEvaluator(
+        new BiomeContext(
+          undefined,
+          ...this.frozenTiles
+        )
+      )
+    )
   }
 
-  buildBasicMap (progressCallback) {
-    const totalSteps = this.basicMapSteps.length
-    for (let i = 0; i < totalSteps; i++) {
-      this.basicMapSteps[i].fn()
-      const progress = (i + 1) / (totalSteps + 1)
-      progressCallback(this.basicMapSteps[i].label, progress)
+  async buildRefinedTiles (refinementEvaluatorName) {
+    switch (refinementEvaluatorName) {
+      case 'nw-coast':
+        return await this.refine('nw-coast', (flatTiles) => this._filterNorthwestOcean(flatTiles))
+      case 'highland':
+        throw new Error(UNDEFINED('HighlandEvaluator', 'Ainda não implementamos!'))
+      case 'vegetation':
+        throw new Error(UNDEFINED('VegetationEvaluator', 'Ainda não implementamos!'))
+      default:
+        throw new Error(INVALID_ARGUMENT(this.constructor.name, 'refinementEvaluator'))
     }
   }
 
-  async buildRefinedMap (progressCallback) {
-    const totalSteps = this.refinementSteps.length
-    for (let i = 0; i < totalSteps; i++) {
-      const step = this.refinementSteps[i]
-      const progress = 0.1 + (0.2 * (i + 1)) / (totalSteps + 1)
-      progressCallback(step.label, progress)
-      await step.fn()
-    }
+  _filterNorthwestOcean (flatTiles) {
+    return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x < this.primeMeridian / 4 && t.grid.y < this.equator - 1)
   }
 
-  async applyCoastline () {
-    // TODO really implement this
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('Aplicou ajuste adicionando costa')
-        resolve()
-      }, 1000)
-    })
+  _isNortheastern (x, y) {
+    return x >= this.primeMeridian && y < this.equator
   }
 
-  async applyHighlands () {
-    // TODO really implement this
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('Imagine que terminou de aplicar ajuste adicionando planaltos e aŕeas elevadas')
-        resolve()
-      }, 2000)
-    })
+  _isSoutheastern (x, y) {
+    return x >= this.primeMeridian && y >= this.equator
   }
 
-  async applyVegetation () {
-    // TODO really implement this
-    return new Promise(resolve => {
-      setTimeout(() => {
-        console.log('Imagine que terminou de aplicar ajuste adicionando vegetação')
-        resolve()
-      }, 3000)
-    })
+  _isSouthwestern (x, y) {
+    return x < this.primeMeridian && y >= this.equator
   }
 }
