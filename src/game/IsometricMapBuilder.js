@@ -2,9 +2,9 @@ import { DEFAULT_LAND_TILE_TEXTURE, OCEAN_WATER } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
 import { INVALID_ARGUMENT, UNDEFINED } from './constants/errors.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
-import { NorthwesternCoastEvaluator } from './mapbuilding/evaluators/NorthwesternCoastEvaluator.js'
-import { LakeEvaluator } from './mapbuilding/evaluators/LakeEvaluator.js'
-import { OceanEvaluator } from './mapbuilding/evaluators/OceanEvaluator.js'
+import { SoftCoastlineEvaluator } from './SoftCoastlineEvaluator.js'
+import { LakeEvaluator } from './LakeEvaluator.js'
+import { OceanEvaluator } from './OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
 import { Bounds } from './math/Bounds.js'
 import { Vector2 } from './math/Vector2.js'
@@ -47,27 +47,36 @@ export class IsometricMapBuilder extends MapBuilder {
     this.tiles = this.buildBasicMapTiles(DEFAULT_LAND_TILE_TEXTURE)
     this.primeMeridian = this.tiles[0].length / 2
     this.equator = this.tiles.length / 2
+    this.centralOffset = this.tiles
 
     // freeze a copy of the basic map tiles to pass to evaluators
     this.frozenTiles = this._freezeTiles()
 
     this.initRefinedBiomeEvaluator(
-      'northwestern-coast',
-      new NorthwesternCoastEvaluator(
+      'soft-coast',
+      new SoftCoastlineEvaluator(
         new BiomeContext(
           undefined,
-          ...this.frozenTiles
+          this.frozenTiles
         )
       )
     )
   }
 
-  async buildRefinedTiles (refinementEvaluatorName) {
-    switch (refinementEvaluatorName) {
-      case 'nw-coast':
-        return await this.refine('nw-coast', (flatTiles) => this._filterNorthwestOcean(flatTiles))
-      case 'highland':
-        throw new Error(UNDEFINED('HighlandEvaluator', 'Ainda não implementamos!'))
+  async buildRefinedTiles (mapRegion) {
+    switch (mapRegion) {
+      case 'northwestern-coast':
+        return await this.refine(
+          'soft-coast',
+          (flatTiles) => this._filterNorthwesternOcean(flatTiles),
+          { yDir: 1 }
+        )
+      case 'northeastern-coast':
+        return await this.refine(
+          'soft-coast',
+          (flatTiles) => this._filterNortheasternOcean(flatTiles),
+          { xDir: -1 }
+        )
       case 'vegetation':
         throw new Error(UNDEFINED('VegetationEvaluator', 'Ainda não implementamos!'))
       default:
@@ -75,19 +84,21 @@ export class IsometricMapBuilder extends MapBuilder {
     }
   }
 
-  _filterNorthwestOcean (flatTiles) {
+  _filterNorthwesternOcean (flatTiles) {
     return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x < this.primeMeridian / 4 && t.grid.y < this.equator)
   }
 
-  _isNortheastern (x, y) {
-    return x >= this.primeMeridian && y < this.equator
+  _filterSouthwesternOcean (flatTiles) {
+    return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x < this.primeMeridian / 4 && t.grid.y > this.equator)
   }
 
-  _isSoutheastern (x, y) {
-    return x >= this.primeMeridian && y >= this.equator
+  _filterNortheasternOcean (flatTiles) {
+    return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x > this.primeMeridian * 1.5 && t.grid.y < this.equator
+    )
   }
 
-  _isSouthwestern (x, y) {
-    return x < this.primeMeridian && y >= this.equator
+  _filterSoutheasternOcean (flatTiles) {
+    return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x > this.primeMeridian * 1.5 && t.grid.y > this.equator
+    )
   }
 }
