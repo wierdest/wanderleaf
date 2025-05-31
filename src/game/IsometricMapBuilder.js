@@ -47,7 +47,6 @@ export class IsometricMapBuilder extends MapBuilder {
     this.tiles = this.buildBasicMapTiles(DEFAULT_LAND_TILE_TEXTURE)
     this.primeMeridian = this.tiles[0].length / 2
     this.equator = this.tiles.length / 2
-    this.centralOffset = this.tiles
 
     // freeze a copy of the basic map tiles to pass to evaluators
     this.frozenTiles = this._freezeTiles()
