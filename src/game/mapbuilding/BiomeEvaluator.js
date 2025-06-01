@@ -10,15 +10,14 @@ export class BiomeEvaluator {
       throw new Error(IS_ABSTRACT(this.constructor.name))
     }
     this.biomeContext = context
-    this.options = {}
   }
 
-  setOptions (options) {
+  setRefinementSteps (options) {
     throw new Error(NOT_IMPLEMENTED(this.constructor.name, 'setOptions'))
   }
 
-  clearOptions () {
-    this.options = { }
+  clearRefinementSteps () {
+    this.steps = []
   }
 
   evaluate (tile) {
