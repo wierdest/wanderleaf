@@ -1,6 +1,6 @@
 export const ASSETS = 'assets'
 export const ATLASES = 'atlases'
-export const DEFAULT_LAND_TILE_TEXTURE = 'tile40'
+export const DEFAULT_LAND_TILE = 'tile40'
 export const OCEAN_WATER = 'tile101'
 export const OCEAN_WAVES = ['tile102', 'tile103']
 export const OCEAN_WATER_WAVY = 'tile102'

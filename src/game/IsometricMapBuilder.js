@@ -1,4 +1,4 @@
-import { DEFAULT_LAND_TILE_TEXTURE, OCEAN_WATER } from './constants/assets.js'
+import { DEFAULT_LAND_TILE, OCEAN_WATER } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
 import { INVALID_ARGUMENT } from './constants/errors.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
@@ -44,7 +44,7 @@ export class IsometricMapBuilder extends MapBuilder {
       )
     )
 
-    this.tiles = this.buildBasicMapTiles(DEFAULT_LAND_TILE_TEXTURE)
+    this.tiles = this.buildBasicMapTiles(DEFAULT_LAND_TILE)
     this.primeMeridian = this.tiles[0].length / 2
     this.equator = this.tiles.length / 2
 

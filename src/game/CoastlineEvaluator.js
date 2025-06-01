@@ -1,4 +1,4 @@
-import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, ROCKS, WATER_SPARKLES } from './constants/assets.js'
+import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE, OCEAN_WAVES, ROCKS, WATER_SPARKLES } from './constants/assets.js'
 import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
 
 export class CoastlineEvaluator extends BiomeEvaluator {
@@ -38,7 +38,7 @@ export class CoastlineEvaluator extends BiomeEvaluator {
     const ny = y + dy
     if (ny < 0 || ny >= this.height || nx < 0 || nx >= this.width) return false
     const neighbor = this.mapTiles[ny][nx]
-    return neighbor?.textureId === DEFAULT_LAND_TILE_TEXTURE
+    return neighbor?.textureId === DEFAULT_LAND_TILE
   }
 
   _chooseSlab () {
