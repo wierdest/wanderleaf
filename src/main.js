@@ -87,6 +87,13 @@ async function setup () {
     map.updateTexture(mapRenderTexture)
   })
 
+  await mapDirector.refine('north-coast').then(async (tiles) => {
+    // here we will re-render the map texture & apply it!
+    mapBasicTextureLoader.tiles = tiles
+    mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
+    map.updateTexture(mapRenderTexture)
+  })
+
   // Map controls for scroll
   const mapArrowControls = new ArrowControls(map)
   mapArrowControls.attach()

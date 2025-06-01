@@ -8,7 +8,7 @@ export const OCEAN_WATER_LESS_WAVY = 'tile103'
 export const LAKE_WATER = 'tile104'
 export const COASTAL_RUGGED_SLAB = 'tile68'
 export const COASTAL_FLAT_SLAB = 'tile69'
-export const COASTAL_ROUND_SLAB = 'tile70'
+export const COASTAL_ROUND_ROCKS = 'tile70'
 export const WATER_SPARKLES = Array.from({ length: 3 }, (_, i) => `tile${82 + i}`)
 export const COASTAL_SUBMERGED_ROCKS = Array.from({ length: 4 }, (_, i) => `tile${71 + i}`)
 export const COASTAL_SUBMERGED_ROCKS_SMALL = ['tile75', 'tile76']
