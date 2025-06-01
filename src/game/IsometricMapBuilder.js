@@ -2,7 +2,7 @@ import { DEFAULT_LAND_TILE_TEXTURE, OCEAN_WATER } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
 import { INVALID_ARGUMENT } from './constants/errors.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
-import { LowlandCoastlineEvaluator } from './LowlandCoastlineEvaluator.js'
+import { CoastlineEvaluator } from './CoastlineEvaluator.js'
 import { LakeEvaluator } from './LakeEvaluator.js'
 import { OceanEvaluator } from './OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
@@ -52,8 +52,8 @@ export class IsometricMapBuilder extends MapBuilder {
     this.frozenTiles = this._freezeTiles()
 
     this.initRefinedBiomeEvaluator(
-      'soft-coast',
-      new LowlandCoastlineEvaluator(
+      'coastline',
+      new CoastlineEvaluator(
         new BiomeContext(
           undefined,
           this.frozenTiles
@@ -66,18 +66,27 @@ export class IsometricMapBuilder extends MapBuilder {
     switch (mapRegion) {
       case 'northwestern-coast':
         return await this.refine(
-          'soft-coast',
+          'coastline',
           (flatTiles) => this._filterNorthwesternOcean(flatTiles),
-          { yDir: 1 }
+          { direction: [1, 0] }
         )
       case 'northeastern-coast':
         return await this.refine(
-          'soft-coast',
+          'coastline',
           (flatTiles) => this._filterNortheasternOcean(flatTiles),
-          { xDir: -1 }
+          { direction: [-1, 0] }
+        )
+      case 'north-coast':
+        return await this.refine(
+          'coastline',
+          (flatTiles) => this._filterNorthOcean(flatTiles),
+          {
+            direction: [0, 1],
+            rocky: true
+          }
         )
       default:
-        throw new Error(INVALID_ARGUMENT(this.constructor.name, 'refinementEvaluator'))
+        throw new Error(INVALID_ARGUMENT(this.constructor.name, 'mapRegion'))
     }
   }
 
@@ -96,6 +105,11 @@ export class IsometricMapBuilder extends MapBuilder {
 
   _filterSoutheasternOcean (flatTiles) {
     return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.x > this.primeMeridian * 1.5 && t.grid.y > this.equator
+    )
+  }
+
+  _filterNorthOcean (flatTiles) {
+    return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.y < this.equator && t.grid.x >= this.primeMeridian / 4 && t.grid.x <= this.primeMeridian * 1.5
     )
   }
 }

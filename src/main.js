@@ -74,14 +74,18 @@ async function setup () {
   const map = new GameMap(mapContainer, mapRenderTexture, screenSize)
   // we control the refinement steps with the director
   await mapDirector.refine('northwestern-coast').then(async (tiles) => {
-    // here we will re-render the map texture & apply it!
     mapBasicTextureLoader.tiles = tiles
     mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
     map.updateTexture(mapRenderTexture)
   })
 
   await mapDirector.refine('northeastern-coast').then(async (tiles) => {
-    // here we will re-render the map texture & apply it!
+    mapBasicTextureLoader.tiles = tiles
+    mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
+    map.updateTexture(mapRenderTexture)
+  })
+
+  await mapDirector.refine('north-coast').then(async (tiles) => {
     mapBasicTextureLoader.tiles = tiles
     mapRenderTexture = await mapBasicTextureLoader.load({ progressCallback: mapLoaderProgressCallback })
     map.updateTexture(mapRenderTexture)
