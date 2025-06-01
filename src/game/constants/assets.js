@@ -13,3 +13,6 @@ export const WATER_SPARKLES = Array.from({ length: 3 }, (_, i) => `tile${82 + i}
 export const COASTAL_SUBMERGED_ROCKS = Array.from({ length: 4 }, (_, i) => `tile${71 + i}`)
 export const COASTAL_SUBMERGED_ROCKS_SMALL = ['tile75', 'tile76']
 export const ROCKS = Array.from({ length: 4 }, (_, i) => `tile${64 + i}`)
+export const FLAT_SLAB = 'tile63'
+export const RUGGED_SLAB = 'tile61'
+export const ROUND_ROCKS = 'tile62'
