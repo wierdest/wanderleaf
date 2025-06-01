@@ -58,7 +58,6 @@ async function setup () {
 
   const loadingBar = new LoadingBar({ container: uiContainer, size: barSize, pos: barPos, textStyle: uiTextStyle })
 
-  // TODO Replace progressCallbacks with ui
   const mapLoaderProgressCallback = (message, progress) => loadingBar.update(message, progress)
 
   const mapBuilder = new IsometricMapBuilder(screenSize)
@@ -134,7 +133,6 @@ async function setup () {
   const player = new Player(new Character(), playerAnimators, playerInitialPosition, playerBounds)
 
   // Player controls
-
   const arrowControls = new ArrowControls(player)
 
   arrowControls.attach()
