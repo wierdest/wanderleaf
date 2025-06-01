@@ -52,7 +52,7 @@ export class IsometricMapBuilder extends MapBuilder {
     this.frozenTiles = this._freezeTiles()
 
     this.initRefinedBiomeEvaluator(
-      'lowland-coast',
+      'coastline',
       new CoastlineEvaluator(
         new BiomeContext(
           undefined,
@@ -66,24 +66,24 @@ export class IsometricMapBuilder extends MapBuilder {
     switch (mapRegion) {
       case 'northwestern-coast':
         return await this.refine(
-          'lowland-coast',
+          'coastline',
           (flatTiles) => this._filterNorthwesternOcean(flatTiles),
           { direction: [1, 0] }
         )
       case 'northeastern-coast':
         return await this.refine(
-          'lowland-coast',
+          'coastline',
           (flatTiles) => this._filterNortheasternOcean(flatTiles),
           { direction: [-1, 0] }
         )
       case 'north-coast':
         return await this.refine(
-          'lowland-coast',
+          'coastline',
           (flatTiles) => this._filterNorthOcean(flatTiles),
           { direction: [0, 1] }
         )
       default:
-        throw new Error(INVALID_ARGUMENT(this.constructor.name, 'refinementEvaluator'))
+        throw new Error(INVALID_ARGUMENT(this.constructor.name, 'mapRegion'))
     }
   }
 
