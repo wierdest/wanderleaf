@@ -1,4 +1,4 @@
-import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, WATER_SPARKLES } from './constants/assets.js'
+import { COASTAL_FLAT_SLAB, COASTAL_ROUND_SLAB, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, WATER_SPARKLES } from './constants/assets.js'
 import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
 
 export class LowlandCoastlineEvaluator extends BiomeEvaluator {
@@ -46,7 +46,7 @@ export class LowlandCoastlineEvaluator extends BiomeEvaluator {
   }
 
   _chooseRuggedSlabOrRock () {
-    return Math.random() < 0.3 ? COASTAL_RUGGED_SLAB : COASTAL_ROUND_ROCKS
+    return Math.random() < 0.3 ? COASTAL_RUGGED_SLAB : COASTAL_ROUND_SLAB
   }
 
   _chooseSparkleOrWave () {
