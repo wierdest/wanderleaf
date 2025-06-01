@@ -73,7 +73,7 @@ export class MapBuilder {
       throw new Error(UNDEFINED('biomeEvaluator', `Evaluator "${refinementEvaluatorName}" not found`))
     }
 
-    evaluator.setOptions(evaluatorOptions)
+    evaluator.setRefinementSteps(evaluatorOptions)
 
     // flatten array
     const flat = this.tiles.flat()
@@ -86,7 +86,7 @@ export class MapBuilder {
       tile.textureId = refined || tile.textureId
     }
 
-    evaluator.clearOptions()
+    evaluator.clearRefinementSteps()
   }
 
   _getRefinedTileTextureId (tile, evaluator) {
