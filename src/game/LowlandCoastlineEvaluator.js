@@ -1,7 +1,7 @@
 import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, WATER_SPARKLES } from './constants/assets.js'
 import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
 
-export class SoftCoastlineEvaluator extends BiomeEvaluator {
+export class LowlandCoastlineEvaluator extends BiomeEvaluator {
   constructor (biomeContext) {
     super(biomeContext)
     this.mapTiles = this.biomeContext.args[0]
@@ -9,40 +9,31 @@ export class SoftCoastlineEvaluator extends BiomeEvaluator {
     this.width = this.mapTiles[0].length
   }
 
-  setOptions (options) {
-    this._xDirMultiplier = options.xDir || 1
-    this._yDir = options.yDir || 0
+  setRefinementSteps (options) {
+    const dx = options.xDir || 1
+    const dy = options.yDir || 0
+
+    this.steps = [
+      { offset: [1 * dx, 0], result: (tile) => this._chooseSlab() },
+      { offset: [2 * dx, 0], result: (tile) => this._chooseRuggedSlabOrRock() },
+      { offset: [3 * dx, 0], result: (tile) => this._chooseSparkleOrWave() },
+      { offset: [4 * dx, 0], result: (tile) => Math.random() < 0.03 ? this._chooseSubmergedRock() : this._chooseSparkleOrTileTexture(tile.textureId) },
+      { offset: [5 * dx, 0], result: (tile) => Math.random() < 0.03 ? this._chooseSubmergedRockSmall() : this._chooseSparkleOrTileTexture(tile.textureId) },
+      { offset: [7 * dx, dy], result: (tile) => Math.random() < 0.4 ? this._chooseSparkleOrWave() : tile.textureId }
+    ]
   }
 
   evaluate (tile) {
     const { x, y } = tile.grid
-
-    if (this._isNeighbour(x, y, 1 * this._xDirMultiplier, 0)) {
-      return this._chooseSlab()
-    }
-
-    if (this._isNeighbour(x, y, 2 * this._xDirMultiplier, 0)) {
-      return this._chooseRuggedSlabOrRock()
-    }
-
-    if (this._isNeighbour(x, y, 3 * this._xDirMultiplier, 0)) {
-      return this._chooseSparkleOrWave()
-    }
-
-    if (this._isNeighbour(x, y, 4 * this._xDirMultiplier, 0)) {
-      return Math.random() < 0.03 ? this._chooseSubmergedRock() : Math.random() < 0.08 ? this._chooseSparkle() : tile.textureId
-    }
-
-    if (this._isNeighbour(x, y, 5 * this._xDirMultiplier, 0)) {
-      return Math.random() < 0.03 ? this._chooseSubmergedRockSmall() : Math.random() < 0.08 ? this._chooseSparkle() : tile.textureId
-    }
-
-    if (this._isNeighbour(x, y, 7 * this._xDirMultiplier, this._yDir)) {
-      return Math.random() < 0.4 ? this._chooseSparkleOrWave() : tile.textureId
+    for (const { offset, result } of this.steps) {
+      const [dx, dy] = offset
+      if (this._isNeighbor(x, y, dx, dy)) {
+        return result(tile)
+      }
     }
   }
 
-  _isNeighbour (x, y, dx, dy) {
+  _isNeighbor (x, y, dx, dy) {
     const nx = x + dx
     const ny = y + dy
     if (ny < 0 || ny >= this.height || nx < 0 || nx >= this.width) return false
@@ -72,5 +63,9 @@ export class SoftCoastlineEvaluator extends BiomeEvaluator {
 
   _chooseSparkle () {
     return WATER_SPARKLES[Math.floor(Math.random() * WATER_SPARKLES.length)]
+  }
+
+  _chooseSparkleOrTileTexture (textureId) {
+    return Math.random() < 0.08 ? this._chooseSparkle() : textureId
   }
 }

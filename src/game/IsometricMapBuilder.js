@@ -2,7 +2,7 @@ import { DEFAULT_LAND_TILE_TEXTURE, OCEAN_WATER } from './constants/assets.js'
 import { TILESIZE } from './constants/dimension.js'
 import { INVALID_ARGUMENT } from './constants/errors.js'
 import { BiomeContext } from './mapbuilding/BiomeContext.js'
-import { SoftCoastlineEvaluator } from './SoftCoastlineEvaluator.js'
+import { LowlandCoastlineEvaluator } from './LowlandCoastlineEvaluator.js'
 import { LakeEvaluator } from './LakeEvaluator.js'
 import { OceanEvaluator } from './OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
@@ -53,7 +53,7 @@ export class IsometricMapBuilder extends MapBuilder {
 
     this.initRefinedBiomeEvaluator(
       'soft-coast',
-      new SoftCoastlineEvaluator(
+      new LowlandCoastlineEvaluator(
         new BiomeContext(
           undefined,
           this.frozenTiles
