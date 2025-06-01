@@ -80,7 +80,10 @@ export class IsometricMapBuilder extends MapBuilder {
         return await this.refine(
           'coastline',
           (flatTiles) => this._filterNorthOcean(flatTiles),
-          { direction: [0, 1] }
+          {
+            direction: [0, 1],
+            rocky: true
+          }
         )
       default:
         throw new Error(INVALID_ARGUMENT(this.constructor.name, 'mapRegion'))
@@ -107,8 +110,6 @@ export class IsometricMapBuilder extends MapBuilder {
 
   _filterNorthOcean (flatTiles) {
     return flatTiles.filter((t) => t.textureId === OCEAN_WATER && t.grid.y < this.equator && t.grid.x >= this.primeMeridian / 4 && t.grid.x <= this.primeMeridian * 1.5
-  )
-
-}
-
+    )
+  }
 }

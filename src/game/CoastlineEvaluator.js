@@ -1,4 +1,4 @@
-import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, WATER_SPARKLES } from './constants/assets.js'
+import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SUBMERGED_ROCKS, COASTAL_SUBMERGED_ROCKS_SMALL, DEFAULT_LAND_TILE_TEXTURE, OCEAN_WAVES, ROCKS, WATER_SPARKLES } from './constants/assets.js'
 import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
 
 export class CoastlineEvaluator extends BiomeEvaluator {
@@ -12,7 +12,7 @@ export class CoastlineEvaluator extends BiomeEvaluator {
   setRefinementSteps (options) {
     this._direction = options.direction
     this.steps = [
-      { distance: 1, result: (tile) => this._chooseSlab() },
+      { distance: 1, result: (tile) => options.rocky ? this._chooseSlabOrRock() : this._chooseSlab() },
       { distance: 2, result: (tile) => this._chooseRuggedSlabOrRock() },
       { distance: 3, result: (tile) => this._chooseSparkleOrWave() },
       { distance: 4, result: (tile) => Math.random() < 0.03 ? this._chooseSubmergedRock() : this._chooseSparkleOrTileTexture(tile.textureId) },
@@ -43,6 +43,14 @@ export class CoastlineEvaluator extends BiomeEvaluator {
 
   _chooseSlab () {
     return Math.random() < 0.3 ? COASTAL_RUGGED_SLAB : COASTAL_FLAT_SLAB
+  }
+
+  _chooseRockySlab () {
+    return Math.random() < 0.2 ? COASTAL_FLAT_SLAB : COASTAL_RUGGED_SLAB
+  }
+
+  _chooseSlabOrRock () {
+    return Math.random() < 0.2 ? this._chooseRockySlab() : ROCKS[Math.floor(Math.random() * ROCKS.length)]
   }
 
   _chooseRuggedSlabOrRock () {
