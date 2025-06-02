@@ -1,15 +1,21 @@
 import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED } from '../constants/errors.js'
 import { BiomeContext } from './BiomeContext.js'
-
+import { EVALUATOR_TYPES } from './EvaluatorTypes.js'
 export class BiomeEvaluator {
-  constructor (context) {
+  constructor (context, type) {
     if (!(context instanceof BiomeContext)) {
       throw new Error(INVALID_ARGUMENT(this.constructor.name, `context: ${context.constructor.name}`))
     }
+
+    if (!Object.values(EVALUATOR_TYPES).includes(type)) {
+      throw new Error(INVALID_ARGUMENT(this.constructor.name, `type: ${type}`))
+    }
+
     if (new.target === BiomeEvaluator) {
       throw new Error(IS_ABSTRACT(this.constructor.name))
     }
     this.biomeContext = context
+    this.type = type
   }
 
   setRefinementSteps (options) {

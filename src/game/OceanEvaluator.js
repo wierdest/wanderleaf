@@ -3,8 +3,8 @@ import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
 import { OCEAN_WATER } from './constants/assets.js'
 
 export class OceanEvaluator extends BiomeEvaluator {
-  constructor (biomeContext) {
-    super(biomeContext)
+  constructor (biomeContext, type) {
+    super(biomeContext, type)
     this.noise2D = createNoise2D()
 
     this.minY = this.biomeContext.bounds.getMinY()

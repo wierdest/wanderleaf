@@ -1,0 +1,4 @@
+export const EVALUATOR_TYPES = Object.freeze({
+  TEXTURE_CHANGE: 'TEXTURE_CHANGE',
+  ELEVATION: 'ELEVATION'
+})

@@ -8,6 +8,8 @@ import { OceanEvaluator } from './OceanEvaluator.js'
 import { MapBuilder } from './mapbuilding/MapBuilder.js'
 import { Bounds } from './math/Bounds.js'
 import { Vector2 } from './math/Vector2.js'
+import { HighlandEvaluator } from './HighlandEvaluator.js'
+import { EVALUATOR_TYPES } from './mapbuilding/EvaluatorTypes.js'
 
 export class IsometricMapBuilder extends MapBuilder {
   init () {
@@ -30,7 +32,8 @@ export class IsometricMapBuilder extends MapBuilder {
         new BiomeContext(
           this.bounds
         )
-      )
+      ),
+      EVALUATOR_TYPES.TEXTURE_CHANGE
     )
 
     this.initBasicMapBiomeEvaluator(
@@ -40,7 +43,8 @@ export class IsometricMapBuilder extends MapBuilder {
           new Bounds(new Vector2(-18, -14)),
           18,
           1
-        )
+        ),
+        EVALUATOR_TYPES.TEXTURE_CHANGE
       )
     )
 
@@ -57,7 +61,19 @@ export class IsometricMapBuilder extends MapBuilder {
         new BiomeContext(
           undefined,
           this.frozenTiles
-        )
+        ),
+        EVALUATOR_TYPES.TEXTURE_CHANGE
+      )
+    )
+
+    this.initRefinedBiomeEvaluator(
+      'highland',
+      new HighlandEvaluator(
+        new BiomeContext(
+          undefined,
+          this.frozenTiles
+        ),
+        EVALUATOR_TYPES.ELEVATION
       )
     )
   }
@@ -85,6 +101,11 @@ export class IsometricMapBuilder extends MapBuilder {
             rocky: true
           }
         )
+      case 'north-central':
+        return await this.refine(
+          ''
+        )
+
       default:
         throw new Error(INVALID_ARGUMENT(this.constructor.name, 'mapRegion'))
     }

@@ -2,8 +2,8 @@ import { COASTAL_FLAT_SLAB, COASTAL_ROUND_ROCKS, COASTAL_RUGGED_SLAB, COASTAL_SU
 import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
 
 export class CoastlineEvaluator extends BiomeEvaluator {
-  constructor (biomeContext) {
-    super(biomeContext)
+  constructor (biomeContext, type) {
+    super(biomeContext, type)
     this.mapTiles = this.biomeContext.args[0]
     this.height = this.mapTiles.length
     this.width = this.mapTiles[0].length

@@ -1,6 +1,7 @@
 import { INVALID_ARGUMENT, IS_ABSTRACT, NOT_IMPLEMENTED, UNDEFINED } from '../constants/errors.js'
 import { deepFreeze } from '../helpers/deepFreeze.js'
 import { Vector2 } from '../math/Vector2.js'
+import { EVALUATOR_TYPES } from './EvaluatorTypes.js'
 import { Tile } from './Tile.js'
 
 export class MapBuilder {
@@ -80,10 +81,20 @@ export class MapBuilder {
 
     // filter according to the concrete implementation
     const filtered = await refinementCallback(flat)
-
     for (const tile of filtered) {
-      const refined = this._getRefinedTileTextureId(tile, evaluator)
-      tile.textureId = refined || tile.textureId
+      // TODO are you sure types in the evaluator are a good idea?
+      switch (evaluator.type) {
+        case EVALUATOR_TYPES.TEXTURE_CHANGE:
+          tile.textureId = this._getRefinedTileTextureId(tile, evaluator) || tile.textureId
+          break
+
+        case EVALUATOR_TYPES.ELEVATION:
+          tile.pos = this._getRefinetTilePos(tile, evaluator) || tile.pos
+          break
+
+        default:
+          throw new Error(UNDEFINED('evaluator.type', `EvaluatorType desconhecido: ${evaluator.type}`))
+      }
     }
 
     evaluator.clearRefinementSteps()
@@ -92,6 +103,11 @@ export class MapBuilder {
   _getRefinedTileTextureId (tile, evaluator) {
     const textureId = evaluator.evaluate(tile)
     if (textureId) return textureId
+  }
+
+  _getRefinetTilePos (tile, evaluator) {
+    const pos = evaluator.evaluate(tile)
+    if (pos) return pos
   }
 
   _freezeTiles () {

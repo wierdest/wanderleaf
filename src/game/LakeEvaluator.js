@@ -3,8 +3,8 @@ import { BiomeEvaluator } from './mapbuilding/BiomeEvaluator.js'
 import { LAKE_WATER } from './constants/assets.js'
 
 export class LakeEvaluator extends BiomeEvaluator {
-  constructor (biomeContext) {
-    super(biomeContext)
+  constructor (biomeContext, type) {
+    super(biomeContext, type)
 
     this.noise2D = createNoise2D()
     this.cx = this.biomeContext.bounds.getBorder().x
