@@ -31,9 +31,9 @@ export class IsometricMapBuilder extends MapBuilder {
       new OceanEvaluator(
         new BiomeContext(
           this.bounds
-        )
-      ),
-      EVALUATOR_TYPES.TEXTURE_CHANGE
+        ),
+        EVALUATOR_TYPES.TEXTURE_CHANGE
+      )
     )
 
     this.initBasicMapBiomeEvaluator(

@@ -82,7 +82,6 @@ export class MapBuilder {
     // filter according to the concrete implementation
     const filtered = await refinementCallback(flat)
     for (const tile of filtered) {
-      // TODO are you sure types in the evaluator are a good idea?
       switch (evaluator.type) {
         case EVALUATOR_TYPES.TEXTURE_CHANGE:
           tile.textureId = this._getRefinedTileTextureId(tile, evaluator) || tile.textureId
